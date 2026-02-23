@@ -13,17 +13,46 @@ const ContactSection = () => {
     const { selectedProject, setSelectedProject } = useProject();
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormState('submitting');
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        setFormState('success');
 
-        // Reset form after 5 seconds to allow sending another
-        setTimeout(() => {
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            category: selectedProject,
+            message: formData.get('message'),
+            source: 'Manta Website Contact Form'
+        };
+
+        try {
+            const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+
+            if (!webhookUrl) {
+                console.warn('VITE_N8N_WEBHOOK_URL is not defined. Falling back to simulation.');
+                await new Promise(resolve => setTimeout(resolve, 2000));
+            } else {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+            }
+
+            setFormState('success');
+
+            // Reset form after 6 seconds
+            setTimeout(() => {
+                setFormState('idle');
+            }, 6000);
+        } catch (error) {
+            console.error('Error submitting form:', error);
             setFormState('idle');
-        }, 6000);
+            alert('Hubo un error al enviar el mensaje. Por favor intenta de nuevo.');
+        }
     };
 
     const copyEmail = () => {
@@ -215,7 +244,7 @@ const ContactSection = () => {
                                             <div className="space-y-3 group">
                                                 <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Tu Identidad</label>
                                                 <input
-                                                    type="text"
+                                                    name="name"
                                                     required
                                                     disabled={formState === 'submitting'}
                                                     placeholder="Nombre"
@@ -225,7 +254,7 @@ const ContactSection = () => {
                                             <div className="space-y-3 group">
                                                 <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Vía de Contacto</label>
                                                 <input
-                                                    type="email"
+                                                    name="email"
                                                     required
                                                     disabled={formState === 'submitting'}
                                                     placeholder="Correo electrónico"
@@ -279,6 +308,7 @@ const ContactSection = () => {
                                         <div className="space-y-3 group">
                                             <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">La Visión</label>
                                             <textarea
+                                                name="message"
                                                 rows={4}
                                                 required
                                                 disabled={formState === 'submitting'}
