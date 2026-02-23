@@ -3,52 +3,54 @@ import { motion } from 'framer-motion';
 import { Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
+import { WavyBackground } from '../components/ui/WavyBackground';
 
 const NotFound: React.FC = () => {
     return (
         <div className="min-h-screen bg-white relative flex flex-col items-center justify-center overflow-hidden px-6">
-            {/* Background Texture — Consistency with main site */}
-            <div className="sketch-grid opacity-[0.12]" />
-            <div className="noise-bg" />
 
-            {/* Geometric Fluid Background — Subtle magenta aura */}
-            <motion.div
-                className="absolute top-[-15%] right-[-15%] w-[50vw] h-[50vw] bg-primary/[0.04] rounded-full blur-[150px]"
-                animate={{
-                    scale: [1, 1.15, 1],
-                    rotate: [0, 60, 0],
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            {/* The Wavy Background - Subdued and Editorial */}
+            <WavyBackground
+                className="absolute inset-0 z-0 pointer-events-none"
+                blur={2}
+                speed="slow"
+                waveOpacity={0.8}
             />
-            <motion.div
-                className="absolute bottom-[-20%] left-[-10%] w-[40vw] h-[40vw] bg-primary/[0.06] rounded-full blur-[120px]"
-                animate={{
-                    scale: [1.1, 1, 1.1],
-                    rotate: [0, -45, 0],
-                }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
+
+            {/* Background Texture — Adds noise over the waves */}
+            <div className="sketch-grid opacity-[0.12] z-0" />
+            <div className="noise-bg z-0" />
 
             {/* ============================================ */}
             {/* IMMENSE LOGO WATERMARK — The Hero of the Page */}
             {/* ============================================ */}
             <motion.div
-                className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+                className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-[1]"
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
             >
-                <img
+                <motion.img
                     src="/logo-color-vector.svg"
                     alt=""
                     aria-hidden="true"
-                    className="w-[80vw] md:w-[60vw] lg:w-[50vw] max-w-[900px] h-auto opacity-[0.04]"
+                    className="w-[140vw] min-w-[1000px] max-w-[2000px] h-auto object-cover opacity-[0.03]"
                     draggable={false}
+                    animate={{
+                        scale: [1, 1.05, 1],
+                        opacity: [0.03, 0.06, 0.03],
+                        rotate: [0, 2, -1, 0]
+                    }}
+                    transition={{
+                        duration: 30,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
                 />
             </motion.div>
 
             {/* Main Content Area */}
-            <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center">
+            <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center mt-[-5vh]">
                 {/* Navigation Logo — Prominent and clickable */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
@@ -113,7 +115,7 @@ const NotFound: React.FC = () => {
             </div>
 
             {/* Premium Detail Footer */}
-            <div className="absolute bottom-8 left-0 w-full flex flex-col md:flex-row justify-between px-8 md:px-16 items-center gap-4 pointer-events-none">
+            <div className="absolute bottom-8 left-0 w-full flex flex-col md:flex-row justify-between px-8 md:px-16 items-center gap-4 pointer-events-none z-10">
                 <div className="flex items-center gap-6">
                     <div className="h-[1px] w-12 bg-deep-charcoal/10 hidden md:block" />
                     <span className="font-mono text-[10px] text-deep-charcoal/25 uppercase tracking-[0.4em]">

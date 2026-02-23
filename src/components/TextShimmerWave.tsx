@@ -1,5 +1,5 @@
 'use client';
-import React, { type JSX } from 'react';
+import React from 'react';
 import { motion, type Transition } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -37,7 +37,7 @@ export function TextShimmerWave({
 }: TextShimmerWaveProps) {
 
     // Adapt to standard Component if needed
-    const MotionComponent = motion[Component as keyof typeof motion] || motion.p;
+    const MotionComponent = (motion as any).create ? (motion as any).create(Component) : (motion as any)[Component as string] || (motion as any).p;
 
     return (
         <MotionComponent

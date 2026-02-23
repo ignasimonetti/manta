@@ -287,7 +287,7 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
                             variants={strikeVariants}
                             className="absolute top-1/2 left-[-4px] right-[-4px] h-[4px] md:h-[8px] bg-primary z-10"
                             style={{
-                                originX: 0,
+                                transformOrigin: 'left center',
                                 filter: 'url(#crayon-filter)',
                                 boxShadow: '0 0 20px rgba(212,33,140,0.3)',
                                 display: 'block',

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { Send, Check, Copy, Instagram, Linkedin, Twitter, Youtube, Sparkles, MoveRight } from 'lucide-react';
+import { Send, Check, Copy, Instagram, Linkedin, Twitter, Youtube, Sparkles, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useProject, type ProjectType } from '../context/ProjectContext';
 import TiltedCard from './TiltedCard';
@@ -8,6 +8,8 @@ import TiltedCard from './TiltedCard';
 const ContactSection = () => {
     const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
     const [copied, setCopied] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const categories = ["Landing Page", "Boutique Sites", "Aplicaciones", "Otro"];
     const { selectedProject, setSelectedProject } = useProject();
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -17,10 +19,15 @@ const ContactSection = () => {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 2000));
         setFormState('success');
+
+        // Reset form after 5 seconds to allow sending another
+        setTimeout(() => {
+            setFormState('idle');
+        }, 6000);
     };
 
     const copyEmail = () => {
-        navigator.clipboard.writeText('hola@manta.studio');
+        navigator.clipboard.writeText('hola@manta.com.ar');
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -115,7 +122,7 @@ const ContactSection = () => {
                             <p className="text-[10px] uppercase tracking-[0.4em] text-white/20 mb-4 font-mono">Línea de Enlace</p>
                             <div className="flex items-center gap-6 text-3xl md:text-5xl text-white font-display transition-all duration-700 group-hover:tracking-tight hover:text-primary">
                                 <span className="relative">
-                                    hola@manta.studio
+                                    hola@manta.com.ar
                                     <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-primary transition-all duration-700 group-hover:w-full" />
                                 </span>
                                 <div className="p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-1000 ease-in-out">
@@ -193,106 +200,167 @@ const ContactSection = () => {
                                 <p className="text-white/50 text-base font-sans font-light">Describe tu visión y tracemos el camino juntos.</p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-10 relative">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                    <div className="space-y-3 group">
-                                        <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Firmante</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            placeholder="Nombre"
-                                            className={inputClasses}
-                                        />
-                                    </div>
-                                    <div className="space-y-3 group">
-                                        <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Enlace</label>
-                                        <input
-                                            type="email"
-                                            required
-                                            placeholder="Correo electrónico"
-                                            className={inputClasses}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3 group relative">
-                                    <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Categoría del Desafío</label>
-                                    <div className="relative">
-                                        <select
-                                            className={cn(inputClasses, "appearance-none cursor-pointer pr-12")}
-                                            value={selectedProject}
-                                            onChange={(e) => setSelectedProject(e.target.value as ProjectType)}
-                                        >
-                                            <option className="bg-[#1a1a1a] text-white" value="Landing Page">Landing Page</option>
-                                            <option className="bg-[#1a1a1a] text-white" value="Boutique Sites">Boutique Sites</option>
-                                            <option className="bg-[#1a1a1a] text-white" value="Aplicaciones">Aplicaciones</option>
-                                            <option className="bg-[#1a1a1a] text-white" value="Otro">Otro</option>
-                                        </select>
-                                        <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/30 group-focus-within:text-primary transition-colors">
-                                            <MoveRight size={16} className="rotate-90" />
+                            <AnimatePresence mode="wait">
+                                {formState !== 'success' ? (
+                                    <motion.form
+                                        key="form"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                                        transition={{ duration: 0.5 }}
+                                        onSubmit={handleSubmit}
+                                        className="space-y-10 relative"
+                                    >
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                            <div className="space-y-3 group">
+                                                <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Tu Identidad</label>
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    disabled={formState === 'submitting'}
+                                                    placeholder="Nombre"
+                                                    className={inputClasses}
+                                                />
+                                            </div>
+                                            <div className="space-y-3 group">
+                                                <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Vía de Contacto</label>
+                                                <input
+                                                    type="email"
+                                                    required
+                                                    disabled={formState === 'submitting'}
+                                                    placeholder="Correo electrónico"
+                                                    className={inputClasses}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div className="space-y-3 group">
-                                    <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">La Visión</label>
-                                    <textarea
-                                        rows={4}
-                                        required
-                                        placeholder="Escribe aquí el núcleo de tu propuesta..."
-                                        className={cn(inputClasses, "resize-none")}
-                                    />
-                                </div>
+                                        <div className="space-y-3 group relative">
+                                            <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Categoría del Desafío</label>
+                                            <div className="relative">
+                                                <div
+                                                    className={cn(inputClasses, "cursor-pointer flex justify-between items-center", formState === 'submitting' && "opacity-50 pointer-events-none")}
+                                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                                >
+                                                    <span className={selectedProject ? "text-white" : "text-white/30"}>
+                                                        {selectedProject || "Selecciona una categoría"}
+                                                    </span>
+                                                    <motion.div animate={{ rotate: isDropdownOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                                                        <ChevronDown size={16} className="text-white/30 group-focus-within:text-primary transition-colors" />
+                                                    </motion.div>
+                                                </div>
+                                                <AnimatePresence>
+                                                    {isDropdownOpen && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                                                            transition={{ duration: 0.2 }}
+                                                            className="absolute top-full left-0 w-full mt-2 bg-[#1A1A1A]/95 backdrop-blur-3xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50 p-2"
+                                                        >
+                                                            {categories.map((cat) => (
+                                                                <div
+                                                                    key={cat}
+                                                                    className={cn("px-4 py-3 rounded-xl cursor-pointer text-sm font-sans transition-colors duration-300 flex items-center justify-between", selectedProject === cat ? "bg-primary/20 text-white" : "text-white/60 hover:text-white hover:bg-white/5")}
+                                                                    onClick={() => {
+                                                                        setSelectedProject(cat as ProjectType);
+                                                                        setIsDropdownOpen(false);
+                                                                    }}
+                                                                >
+                                                                    {cat}
+                                                                    {selectedProject === cat && <Check size={14} className="text-primary" />}
+                                                                </div>
+                                                            ))}
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </div>
+                                        </div>
 
-                                <motion.button
-                                    type="submit"
-                                    disabled={formState !== 'idle'}
-                                    whileHover={formState === 'idle' ? { scale: 1.02, y: -2, backgroundColor: "#ffffff", color: "#000000" } : {}}
-                                    whileTap={formState === 'idle' ? { scale: 0.98 } : {}}
-                                    className={cn(
-                                        "w-full py-6 rounded-2xl font-display font-medium text-[11px] tracking-[4px] uppercase transition-all duration-700 relative overflow-hidden group/btn shadow-2xl",
-                                        formState === 'idle'
-                                            ? "bg-white text-black hover:shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
-                                            : "bg-white/10 text-white/40 cursor-default"
-                                    )}
-                                >
-                                    <AnimatePresence mode="wait">
-                                        {formState === 'idle' && (
-                                            <motion.div
-                                                key="idle"
-                                                initial={{ opacity: 0, scale: 0.9 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 1.1 }}
-                                                className="flex items-center justify-center gap-4"
-                                            >
-                                                Enviar Propuesta <Send size={14} className="group-hover/btn:translate-x-2 group-hover/btn:-translate-y-2 transition-transform duration-500" />
-                                            </motion.div>
-                                        )}
-                                        {formState === 'submitting' && (
-                                            <motion.div
-                                                key="submitting"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                className="flex items-center justify-center gap-3"
-                                            >
-                                                <div className="w-4 h-4 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
-                                                Procesando...
-                                            </motion.div>
-                                        )}
-                                        {formState === 'success' && (
-                                            <motion.div
-                                                key="success"
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                className="flex items-center justify-center gap-2 text-primary"
-                                            >
-                                                Recibido con Éxito <Check size={18} />
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </motion.button>
-                            </form>
+                                        <div className="space-y-3 group">
+                                            <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">La Visión</label>
+                                            <textarea
+                                                rows={4}
+                                                required
+                                                disabled={formState === 'submitting'}
+                                                placeholder="Escribe aquí el núcleo de tu propuesta..."
+                                                className={cn(inputClasses, "resize-none")}
+                                            />
+                                        </div>
+
+                                        <motion.button
+                                            type="submit"
+                                            disabled={formState !== 'idle'}
+                                            whileHover={formState === 'idle' ? { scale: 1.02, y: -2, backgroundColor: "#ffffff", color: "#000000" } : {}}
+                                            whileTap={formState === 'idle' ? { scale: 0.98 } : {}}
+                                            className={cn(
+                                                "w-full py-6 rounded-2xl font-display font-medium text-[11px] tracking-[4px] uppercase transition-all duration-700 relative overflow-hidden group/btn shadow-2xl",
+                                                formState === 'idle'
+                                                    ? "bg-white text-black hover:shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                                                    : "bg-white/10 text-white/40 cursor-default"
+                                            )}
+                                        >
+                                            <AnimatePresence mode="wait">
+                                                {formState === 'idle' && (
+                                                    <motion.div
+                                                        key="idle"
+                                                        initial={{ opacity: 0, scale: 0.9 }}
+                                                        animate={{ opacity: 1, scale: 1 }}
+                                                        exit={{ opacity: 0, scale: 1.1 }}
+                                                        className="flex items-center justify-center gap-4"
+                                                    >
+                                                        Enviar Propuesta <Send size={14} className="group-hover/btn:translate-x-2 group-hover/btn:-translate-y-2 transition-transform duration-500" />
+                                                    </motion.div>
+                                                )}
+                                                {formState === 'submitting' && (
+                                                    <motion.div
+                                                        key="submitting"
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                        className="flex items-center justify-center gap-3"
+                                                    >
+                                                        <div className="w-4 h-4 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+                                                        Procesando Visión...
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </motion.button>
+                                    </motion.form>
+                                ) : (
+                                    <motion.div
+                                        key="success-message"
+                                        initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                        transition={{ duration: 0.5, delay: 0.2 }}
+                                        className="absolute inset-0 flex flex-col items-center justify-center text-center bg-[#111111] z-10"
+                                    >
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
+                                            className="w-24 h-24 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-8 text-primary shadow-[0_0_50px_rgba(255,0,255,0.2)]"
+                                        >
+                                            <Check size={40} strokeWidth={1.5} />
+                                        </motion.div>
+                                        <motion.h4
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.5 }}
+                                            className="text-4xl md:text-5xl font-display text-white mb-4 tracking-tight"
+                                        >
+                                            Iniciativa Recibida
+                                        </motion.h4>
+                                        <motion.p
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.6 }}
+                                            className="text-white/50 font-sans text-lg max-w-sm mx-auto leading-relaxed"
+                                        >
+                                            Hemos capturado tu visión. Nos pondremos en contacto contigo a la brevedad para materializar el siguiente paso.
+                                        </motion.p>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     </TiltedCard>
                 </motion.div>
