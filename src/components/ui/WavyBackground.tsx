@@ -64,11 +64,11 @@ export const WavyBackground = ({
     };
 
     const waveColors = colors ?? [
-        "rgba(0, 0, 0, 0.12)", // Un gris más oscuro para que se vea
-        "rgba(0, 0, 0, 0.15)",
-        "rgba(0, 0, 0, 0.10)",
-        "rgba(0, 0, 0, 0.18)",
-        "rgba(0, 0, 0, 0.14)",
+        "rgba(217, 2, 109, 0.05)", // Sutil toque de magenta Manta
+        "rgba(26, 26, 26, 0.08)",   // Gris oscuro suave
+        "rgba(217, 2, 109, 0.03)",
+        "rgba(26, 26, 26, 0.05)",
+        "rgba(217, 2, 109, 0.04)",
     ];
 
     const drawWave = (n: number) => {

@@ -10,11 +10,40 @@ import VideoShowcase from '../components/VideoShowcase';
 import VideoLight from '../components/VideoLight';
 import TextReveal from '../components/TextReveal';
 import { useScroll, useTransform, motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+
+const FooterReveal = () => {
+    const containerRef = React.useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end end"]
+    });
+    const yParallax = useTransform(scrollYProgress, [0, 1], ["-20%", "0%"]);
+    const footerOpacity = useTransform(scrollYProgress, [0, 0.6], [0.6, 1]);
+    const footerScale = useTransform(scrollYProgress, [0, 0.8], [0.92, 1]);
+
+    return (
+        <div ref={containerRef} className="relative z-0 bg-[#0A0A0A] pt-[20%]">
+            <motion.div style={{ y: yParallax, opacity: footerOpacity, scale: footerScale }}>
+                <FooterSignature />
+            </motion.div>
+        </div>
+    );
+};
 
 const Home = () => {
     const { scrollY } = useScroll();
     const [currentVh, setCurrentVh] = React.useState(typeof window !== 'undefined' ? window.innerHeight : 800);
+
+    const introRef = React.useRef<HTMLElement>(null);
+    const { scrollYProgress: introScrollProgress } = useScroll({
+        target: introRef,
+        offset: ["start end", "end start"]
+    });
+
+    // Parallax values for the intro section
+    const titleY = useTransform(introScrollProgress, [0, 1], ["-15%", "15%"]);
+    const textY = useTransform(introScrollProgress, [0, 1], ["10%", "-10%"]);
+    const rightSideY = useTransform(introScrollProgress, [0, 1], ["15%", "-15%"]);
 
     React.useEffect(() => {
         const updateVh = () => setCurrentVh(window.innerHeight);
@@ -22,102 +51,121 @@ const Home = () => {
         return () => window.removeEventListener('resize', updateVh);
     }, []);
 
-    // Background Color Transition: Pure White (#FFFFFF) -> Cloud Dancer (#F0F0EF)
-    const bgColor = useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], ["#FFFFFF", "#F0F0EF"]);
+    // Background Color Transition: Pure White (#FFFFFF) -> Paper Light (#F9F9F7)
+    const bgColor = useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], ["#FFFFFF", "#F9F9F7"]);
+    const sketchOpacity = useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], [0, 0.4]);
 
     return (
-        <motion.div
-            className="min-h-screen selection:bg-primary selection:text-white relative"
-            style={{ backgroundColor: bgColor }}
-        >
-            {/* Global Artistic Overlays */}
-            <motion.div
-                className="fixed inset-0 sketch-grid pointer-events-none -z-10"
-                style={{ opacity: useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], [0, 0.4]) }}
-            />
+        <div className="selection:bg-primary selection:text-white bg-[#0A0A0A] font-sans">
+            <motion.main
+                className="relative z-10 w-full shadow-[0_20px_60px_rgba(0,0,0,0.5)] origin-top border-b border-black/10"
+                style={{ backgroundColor: bgColor }}
+            >
+                {/* Global Artistic Overlays */}
+                <motion.div
+                    className="fixed inset-0 sketch-grid pointer-events-none -z-10"
+                    style={{ opacity: sketchOpacity }}
+                />
 
-            <div className="noise-bg" />
-            <Hero />
+                <div className="noise-bg" />
+                <Hero />
 
-            {/* Brand Intro Section — Relocated from Hero */}
-            <section className="relative bg-white z-20 py-32 px-8 md:px-12 border-t border-gray-100 overflow-hidden">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+                {/* Brand Intro Section — Relocated from Hero */}
+                <section ref={introRef} className="relative bg-paper-light z-20 py-20 md:py-40 px-6 md:px-12 border-t border-black/5 overflow-hidden">
+                    {/* Technical Grid Accent */}
+                    <motion.div className="absolute top-0 right-0 w-64 h-64 opacity-[0.03] pointer-events-none"
+                        style={{
+                            y: useTransform(introScrollProgress, [0, 1], ["-30%", "30%"]),
+                            backgroundImage: 'linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)',
+                            backgroundSize: '40px 40px'
+                        }}
+                    />
 
-                    {/* Left: Brand Name & Tagline */}
-                    <motion.div
-                        className="md:col-span-5"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <motion.h1
-                            className="font-montserrat text-6xl md:text-8xl lg:text-9xl font-normal tracking-tight text-deep-charcoal leading-none mb-6 uppercase"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.1 }}
-                        >
-                            MANTA
-                        </motion.h1>
+                    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-end">
+
+                        {/* Left: Brand Name & Tagline */}
                         <motion.div
-                            className="flex flex-col gap-3 border-l-2 border-primary pl-5"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
+                            className="md:col-span-6"
+                            style={{ y: titleY }}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <p className="font-sans text-base md:text-lg text-deep-charcoal/70 max-w-sm font-normal leading-relaxed">
-                                Fusionando el gesto orgánico con la estructura digital precisa.
-                            </p>
-                            <div className="font-mono text-[10px] text-gray-400 uppercase tracking-widest mt-1">
-                                Est. 1999 — Atelier Digital
+                            <div className="mb-10 text-primary/60 font-mono text-[10px] tracking-[0.5em] uppercase font-bold">
+                                Manta / Atelier Digital
                             </div>
+
+                            <motion.h1
+                                className="font-display text-6xl md:text-9xl lg:text-[10rem] font-medium tracking-[calc(-0.06em)] text-black leading-none mb-10 uppercase"
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: 0.1 }}
+                            >
+                                MANTA
+                            </motion.h1>
+
+                            <motion.div
+                                className="flex flex-col gap-5 border-l-[3px] border-primary pl-8 max-w-sm"
+                                style={{ y: textY }}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3, duration: 0.8 }}
+                            >
+                                <p className="font-sans text-xl md:text-2xl text-black/60 font-normal leading-tight">
+                                    Fusionando el <span className="text-black font-medium italic">gesto orgánico</span> con la estructura digital precisa.
+                                </p>
+                                <div className="font-mono text-[10px] text-black/30 uppercase tracking-[0.4em] mt-2">
+                                    Est. 1999 — System Built
+                                </div>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
 
-                    {/* Spacer */}
-                    <div className="md:col-span-2" />
-
-                    {/* Right: CTA + Manifesto Summary */}
-                    <motion.div
-                        className="md:col-span-5 flex flex-col justify-end items-start gap-8"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <TextReveal
-                            text="Eliminamos lo innecesario, dejando marcas que se sienten humanas en un mundo digital."
-                            className="font-sans text-xl md:text-2xl text-gray-500 leading-relaxed font-light max-w-md italic"
-                            delay={0.4}
-                            accentLastWord={true}
-                        />
-
-                        <a href="#contacto" className="group cursor-pointer">
-                            <div className="flex items-center gap-4 bg-deep-charcoal text-white px-8 py-4 rounded-full font-display font-medium text-sm tracking-widest hover:bg-primary transition-all transform hover:-translate-y-1 shadow-glass">
-                                INICIAR PROYECTO
-                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        {/* Right: CTA + Manifesto Summary */}
+                        <motion.div
+                            className="md:col-span-6 flex flex-col justify-end items-start md:items-end gap-12"
+                            style={{ y: rightSideY }}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <div className="md:text-right">
+                                <TextReveal
+                                    text="Eliminamos lo innecesario, dejando marcas que se sienten humanas en un mundo digital."
+                                    className="font-sans text-2xl md:text-3xl text-black/50 leading-snug font-normal max-w-md italic"
+                                    delay={0.4}
+                                    accentLastWord={true}
+                                />
                             </div>
-                        </a>
-                    </motion.div>
 
-                </div>
-            </section>
+                            <a href="#contacto" className="group cursor-pointer">
+                                <div className="btn-atelier bg-black text-white px-8 py-5 md:px-10 rounded-none font-mono font-bold text-[11px] tracking-[0.3em] md:tracking-[0.4em] transition-all hatch-shadow border-none hover:bg-neutral-900 border-none">
+                                    INICIAR PROYECTO
+                                </div>
+                            </a>
+                        </motion.div>
 
-            <VideoLight />
+                    </div>
+                </section>
 
-            <ParticlesSection />
-            <VideoShowcase />
-            <ManifestoSection />
-            <ServicesSection />
+                <VideoLight />
 
-            <PortfolioSection />
+                <ParticlesSection />
+                <VideoShowcase />
+                <ManifestoSection />
+                <ServicesSection />
 
-            <ContactSection />
+                <PortfolioSection />
 
-            <FooterSignature />
-        </motion.div>
+                <ContactSection />
+
+            </motion.main>
+
+            <FooterReveal />
+        </div>
     );
 };
 

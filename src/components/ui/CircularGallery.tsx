@@ -6,7 +6,7 @@ import React, {
     useMemo,
     useCallback,
 } from "react";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { CaretLeft, CaretRight, ArrowSquareOut } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,7 @@ interface GalleryItem {
     src: string;
     url?: string;
     tags?: string[];
+    mediaType?: 'image' | 'video';
 }
 
 interface Colors {
@@ -56,23 +57,10 @@ function calculateGap(width: number) {
 export const CircularGallery = ({
     items,
     autoplay = true,
-    colors = {},
-    fontSizes = {},
     className,
 }: CircularGalleryProps) => {
-    // Color & font config
-    const colorName = colors.name ?? "#fff";
-    const colorArrowBg = colors.arrowBackground ?? "rgba(255, 255, 255, 0.05)";
-    const colorArrowFg = colors.arrowForeground ?? "#fff";
-    const colorArrowHoverBg = colors.arrowHoverBackground ?? "rgba(37, 99, 235, 0.4)";
-
-    const fontSizeName = fontSizes.name ?? "2.5rem";
-    const fontSizeQuote = fontSizes.quote ?? "1.125rem";
-
     // State
     const [activeIndex, setActiveIndex] = useState(0);
-    const [hoverPrev, setHoverPrev] = useState(false);
-    const [hoverNext, setHoverNext] = useState(false);
     const [containerWidth, setContainerWidth] = useState(1200);
 
     const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -129,7 +117,7 @@ export const CircularGallery = ({
         if (autoplayIntervalRef.current) window.clearInterval(autoplayIntervalRef.current);
     }, [itemsLength]);
 
-    // Compute transforms for each image (always show 3: left, center, right)
+    // Compute transforms for each image
     function getImageStyle(index: number): React.CSSProperties {
         const gap = calculateGap(containerWidth);
         const maxStickUp = gap * 0.8;
@@ -144,40 +132,38 @@ export const CircularGallery = ({
                 opacity: 1,
                 pointerEvents: "auto",
                 transform: `translateX(0px) translateY(0px) scale(1) rotateY(0deg)`,
-                transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+                transition: "all 0.8s cubic-bezier(.16, 1, .3, 1)",
             };
         }
         if (isLeft) {
             return {
                 zIndex: 2,
-                opacity: 0.4,
+                opacity: 0.3,
                 pointerEvents: "auto",
-                transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.8) rotateY(25deg)`,
-                transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
-                filter: "blur(4px) grayscale(1)",
+                transform: `translateX(-${gap}px) translateY(-${maxStickUp}px) scale(0.8) rotateY(15deg)`,
+                transition: "all 0.8s cubic-bezier(.16, 1, .3, 1)",
+                filter: "grayscale(1)",
             };
         }
         if (isRight) {
             return {
                 zIndex: 2,
-                opacity: 0.4,
+                opacity: 0.3,
                 pointerEvents: "auto",
-                transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.8) rotateY(-25deg)`,
-                transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
-                filter: "blur(4px) grayscale(1)",
+                transform: `translateX(${gap}px) translateY(-${maxStickUp}px) scale(0.8) rotateY(-15deg)`,
+                transition: "all 0.8s cubic-bezier(.16, 1, .3, 1)",
+                filter: "grayscale(1)",
             };
         }
-        // Hide all other images
         return {
             zIndex: 1,
             opacity: 0,
             pointerEvents: "none",
-            transition: "all 0.8s cubic-bezier(.4,2,.3,1)",
+            transition: "all 0.8s cubic-bezier(.16, 1, .3, 1)",
             transform: `scale(0.5) translateY(100px)`,
         };
     }
 
-    // Framer Motion variants for quote
     const quoteVariants = {
         initial: { opacity: 0, x: 20 },
         animate: { opacity: 1, x: 0 },
@@ -188,25 +174,40 @@ export const CircularGallery = ({
         <div className={cn("w-full max-w-6xl mx-auto px-4 py-12 md:py-24", className)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
 
-                {/* Images Layer */}
+                {/* Images Layer - The Woodblock Frame */}
                 <div className="relative w-full h-[300px] md:h-[450px] [perspective:1500px]" ref={imageContainerRef}>
                     {items.map((item, index) => (
                         <motion.div
                             key={item.src + index}
-                            className="absolute inset-0 shadow-2xl rounded-3xl overflow-hidden border border-white/10"
+                            className={`absolute inset-0 overflow-hidden border vellum
+                                ${index === activeIndex ? 'hatch-shadow border-black/10' : 'border-black/5'}
+                            `}
                             style={getImageStyle(index)}
                         >
-                            <img
-                                src={item.src}
-                                alt={item.name}
-                                className="w-full h-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                            {item.mediaType === 'video' || item.src.match(/\.(mp4|webm|ogg)$/i) ? (
+                                <video
+                                    src={item.src}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="w-full h-full object-cover grayscale-[0.5] contrast-[1.1]"
+                                />
+                            ) : (
+                                <img
+                                    src={item.src}
+                                    alt={item.name}
+                                    className="w-full h-full object-cover grayscale-[0.5] contrast-[1.1]"
+                                />
+                            )}
+                            {/* Paper Grain Overlay for images/video */}
+                            <div className="absolute inset-0 bg-paper opacity-10 pointer-events-none mix-blend-multiply" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
                         </motion.div>
                     ))}
 
-                    {/* Subtle Glow beneath images */}
-                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-2/3 h-20 bg-primary/20 blur-[100px] rounded-full opacity-50" />
+                    {/* Ink Splatter backdrop beneath images */}
+                    <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-full h-40 ink-wash opacity-20 rotate-45 scale-150" />
                 </div>
 
                 {/* Content Layer */}
@@ -218,37 +219,40 @@ export const CircularGallery = ({
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                             className="space-y-6"
                         >
                             <div>
                                 <motion.span
-                                    className="font-mono text-[10px] text-primary uppercase tracking-[0.4em] mb-2 block"
+                                    className="font-mono text-[11px] text-primary uppercase tracking-[0.4em] mb-3 block font-bold"
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.1 }}
                                 >
                                     {activeItem.designation}
                                 </motion.span>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="font-mono text-[9px] text-black/30 tracking-[0.2em]">ID_{activeIndex.toString().padStart(3, '0')}</span>
+                                    <div className="w-8 h-[1px] bg-black/10" />
+                                    <span className="font-mono text-[9px] text-black/30 tracking-[0.2em]">COORD: {((activeIndex + 1) * 12.34).toFixed(2)}°N</span>
+                                </div>
                                 <h3
-                                    className="font-display font-medium tracking-tight mb-2"
-                                    style={{ color: colorName, fontSize: fontSizeName }}
+                                    className="font-display font-medium tracking-tight mb-2 text-black text-4xl md:text-5xl"
                                 >
                                     {activeItem.name}
                                 </h3>
                             </div>
 
-                            <div className="h-px w-12 bg-primary/30" />
+                            <div className="h-[2px] w-12 bg-primary" />
 
                             <motion.div
-                                className="font-sans text-white/50 leading-relaxed max-w-md italic"
-                                style={{ fontSize: fontSizeQuote }}
+                                className="font-sans text-black/60 leading-relaxed max-w-md font-normal text-lg"
                             >
                                 {activeItem.quote.split(" ").map((word, i) => (
                                     <motion.span
                                         key={i}
                                         initial={{
-                                            filter: "blur(10px)",
+                                            filter: "blur(4px)",
                                             opacity: 0,
                                             y: 5,
                                         }}
@@ -258,9 +262,9 @@ export const CircularGallery = ({
                                             y: 0,
                                         }}
                                         transition={{
-                                            duration: 0.3,
-                                            ease: [0.22, 1, 0.36, 1],
-                                            delay: 0.02 * i,
+                                            duration: 0.4,
+                                            ease: [0.16, 1, 0.3, 1],
+                                            delay: 0.012 * i,
                                         }}
                                         style={{ display: "inline-block" }}
                                     >
@@ -272,7 +276,7 @@ export const CircularGallery = ({
                             {activeItem.tags && (
                                 <div className="flex flex-wrap gap-2 pt-2">
                                     {activeItem.tags.map((tag) => (
-                                        <span key={tag} className="text-[9px] font-mono px-2 py-0.5 rounded-full border border-white/10 bg-white/5 text-white/40 uppercase tracking-widest">
+                                        <span key={tag} className="text-[10px] font-mono px-2 py-0.5 border border-black/10 text-black/40 uppercase tracking-widest bg-white/50">
                                             {tag}
                                         </span>
                                     ))}
@@ -282,40 +286,30 @@ export const CircularGallery = ({
                             <div className="pt-8 flex flex-wrap gap-4 items-center">
                                 {activeItem.url && activeItem.url !== '#' && (
                                     <motion.button
-                                        className="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-black font-display text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-white transition-all duration-300"
+                                        className="group flex items-center gap-2 px-8 py-3 bg-black text-white font-display text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-primary hover:text-white transition-all duration-300 hatch-shadow"
                                         whileHover={{ y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => window.open(activeItem.url, '_blank', 'noopener,noreferrer')}
                                     >
                                         Visitar Proyecto
-                                        <ExternalLink size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                        <ArrowSquareOut size={14} weight="bold" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                     </motion.button>
                                 )}
 
                                 <div className="flex gap-4">
                                     <button
-                                        className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
+                                        className="w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 border border-black/10 bg-white/40 hover:bg-white hover:hatch-shadow"
                                         onClick={handlePrev}
-                                        style={{
-                                            backgroundColor: hoverPrev ? colorArrowHoverBg : colorArrowBg,
-                                        }}
-                                        onMouseEnter={() => setHoverPrev(true)}
-                                        onMouseLeave={() => setHoverPrev(false)}
                                         aria-label="Previous project"
                                     >
-                                        <ArrowLeft size={20} color={colorArrowFg} />
+                                        <CaretLeft size={24} weight="bold" color="#000" />
                                     </button>
                                     <button
-                                        className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-all duration-300 border border-white/10"
+                                        className="w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 border border-black/10 bg-white/40 hover:bg-white hover:hatch-shadow"
                                         onClick={handleNext}
-                                        style={{
-                                            backgroundColor: hoverNext ? colorArrowHoverBg : colorArrowBg,
-                                        }}
-                                        onMouseEnter={() => setHoverNext(true)}
-                                        onMouseLeave={() => setHoverNext(false)}
                                         aria-label="Next project"
                                     >
-                                        <ArrowRight size={20} color={colorArrowFg} />
+                                        <CaretRight size={24} weight="bold" color="#000" />
                                     </button>
                                 </div>
                             </div>

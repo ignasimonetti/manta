@@ -1,37 +1,37 @@
-# RECAP SESSION - Multi-Project Maintenance & 404 Experience
-**Date**: 2026-02-23
-**Focus**: Infra (DNS/Cloudflare), Rescue (Estudio Simonetti), and UX/UI (404 Page)
+# RECAP_SESSION: Portfolio Visual Redirección (Artisan/Handmade)
 
-## 🏗️ 1. Infraestructura & Conectividad (Manta)
-Se completó la migración y robustecimiento de la infraestructura de Manta Studio:
-- **Cloudflare DNS**: Transferencia exitosa a la nueva cuenta. Nameservers configurados: `anton.ns.cloudflare.com` y `maleah.ns.cloudflare.com`.
-- **Email Routing**: Activado en Cloudflare. Todos los correos a `hola@manta.com.ar` se redirigen correctamente.
-- **Registro A**: Configurado subdominio `pocketpersonal.manta.com.ar` apuntando a la IP del VPS (`147.93.59.13`) para restaurar servicios satélites.
+## Session Summary
+In this session, we evolved the visual identity of the Portfolio section from a "Technical/Industrial" style to an ** "Artisan/Handmade Digital Craft"** aesthetic. 
+This change aligns with Manta's core identity, moving away from "chiselled/factory" visuals towards a more human, process-oriented "living canvas" feel.
 
-## 🚑 2. Rescate: Estudio Simonetti (`estudiosimonetti.com.ar`)
-Se resolvió un **Error 500 (SSR Failure)** crítico:
-- **Diagnóstico**: La aplicación Astro no podía renderizar porque el subdominio de API `pocketpersonal.manta.com.ar` (PocketBase) estaba caído tras la migración de DNS.
-- **Solución**: Restauración del registro DNS en la nueva zona de Cloudflare. La web ya está online y conectando a la base de datos de forma estable.
+## Key Accomplishments
 
-## 🎨 3. UX/UI: Página 404 "Blank Canvas"
-Transformamos la página de error en una experiencia de marca premium:
-- **Concepto**: "Extraviado en el Proceso". Metáfora de volver al lienzo en blanco (Light Mode).
-- **Componente `WavyBackground`**:
-    - Implementado con **Canvas + Simplex Noise**.
-    - Estética: Ondas grises sutiles (`rgba(0,0,0, 0.15)`), trazo de 4px, movimiento fluido lento.
-    - Resolvimos bug de visibilidad ajustando el `blur` (de 10px a 2px) y la opacidad.
-- **Watermark Hero**: Isologo gigante de Manta de fondo con efecto de **"Respiración profunda"** (animación continua de escala, opacidad y rotación sutil en ciclos de 30s).
-- **Navegación**: Botones con glassmorphism y efectos hover de Sparkles.
+### 1. Conceptual Shift
+- **Narrative Change**: Updated `PortfolioSection.tsx` descriptions from "Technical Engraving" to "Artisan Design" and "Digital Workshop".
+- **Reference Change**: Updated internal section reference from `BLUEPRINT_ST01` to `ARTISAN_ST01`.
 
-## 🧬 4. Project DNA (Technical Summary)
-- **Dependencies Added**: `simplex-noise` (v4.0.3).
-- **Design Pattern**: Contraste tonal entre Home (Dark) y 404 (Light) para reforzar la narrativa de "Página en blanco".
-- **Stack**: React (Vite) + Framer Motion + Lucide + Canvas API.
+### 2. Video Asset Management
+- **Cleanup**: Removed all old `.mp4` and `.png` assets with industrial aesthetics from `public/projects/`.
+- **Integration**: Successfully integrated 3 new videos from `creative_assets/` into `public/projects/` with standardized naming:
+    - `simonetti.mp4`: Estudio Simonetti (Premium/Authority).
+    - `cisb.mp4`: CISB (Institutional/Human).
+    - `hub.mp4`: Hospital HUB (Technical/Data).
 
-## ⏭️ Próximos Pasos (Nueva Sesión)
-1. **API de Formulario**: Configurar backend NodeJS/Express en Coolify (`api.manta.com.ar`).
-2. **Resend**: Integrar API Key para envíos desde `ContactSection.tsx`.
-3. **Optimización SEO**: Asegurar que las nuevas rutas (`/lab`, `/404`) tengan meta-tags coherentes.
+### 3. AI Prompt Strategies (Brain Logic)
+Updated project logic with new strategies for future video iterations:
+- **"The Master Cursor" Concept**: Using a white canvas + mouse pointer to show the "crafting" process.
+- **Specific Prompts for Whisk & Flow**: Documentation stored in `implementation_plan.md` and `task.md` within the brain directory.
+
+## Project Context Status
+- **PortfolioSection.tsx**: Fully updated with artisan narrative and correct video paths.
+- **Asset Folders**: Organized and clean.
+- **Brand Cohesion**: Strengthened through the process-focused visual storytelling.
+
+## Next Steps Recommended for New Chat
+1. **Landing Polish**: Continue verifying the artisan aesthetic across other sections (Manifesto, Services).
+2. **Performance**: Check video loading speeds and implement poster frames if needed for the new videos.
+3. **Interactive Components**: Explore using similar "hand-drawn/mask" transitions for other UI elements.
 
 ---
-*Este documento resume las últimas interacciones críticas. Se recomienda cerrar este hilo y abrir uno nuevo para mantener el rendimiento óptimo del IDE.*
+*Archive Date: 2026-02-26*
+*Current Session Brain ID: 86b9b6ba-8874-4f13-9e55-1dc574ef8f05*

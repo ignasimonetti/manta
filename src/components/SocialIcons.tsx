@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Linkedin, Twitter, Youtube, MessageCircle } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo, ChatCircleText } from '@phosphor-icons/react';
 
-const SocialIcon: React.FC<{ icon: LucideIcon, href: string }> = ({ icon: Icon, href }) => {
+const SocialIcon: React.FC<{ icon: any, href: string }> = ({ icon: Icon, href }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -28,13 +27,13 @@ const SocialIcon: React.FC<{ icon: LucideIcon, href: string }> = ({ icon: Icon, 
             <motion.div
                 variants={{
                     idle: { scale: 1, opacity: 0.6, rotate: 0 },
-                    hover: { scale: 1.1, opacity: 1, rotate: 5, color: '#FF00FF' }
+                    hover: { scale: 1.1, opacity: 1, rotate: 5, color: 'var(--color-primary)' }
                 }}
                 transition={{
                     duration: 2, repeat: Infinity, repeatType: "reverse"
                 }}
             >
-                <Icon size={20} className="transition-colors group-hover:drop-shadow-[0_0_8px_rgba(255,0,255,0.5)]" />
+                <Icon weight="thin" size={24} className="transition-colors group-hover:drop-shadow-[0_0_8px_rgba(217,2,109,0.5)]" />
             </motion.div>
 
             {/* Ripple Effect on Click */}
@@ -55,7 +54,7 @@ const SocialIcon: React.FC<{ icon: LucideIcon, href: string }> = ({ icon: Icon, 
                 className="absolute inset-0 rounded-xl border border-white/20"
                 animate={{
                     opacity: isHovered ? 1 : 0.4,
-                    borderColor: isHovered ? 'rgba(255,0,255,0.4)' : 'rgba(255,255,255,0.2)'
+                    borderColor: isHovered ? 'var(--color-primary)' : 'rgba(255,255,255,0.2)'
                 }}
             />
         </motion.a>
@@ -65,11 +64,11 @@ const SocialIcon: React.FC<{ icon: LucideIcon, href: string }> = ({ icon: Icon, 
 const SocialIcons: React.FC = () => {
     return (
         <div className="flex gap-4">
-            <SocialIcon icon={Linkedin} href="https://www.linkedin.com/in/ignacio-simonetti-7148b6ba/" />
-            <SocialIcon icon={Youtube} href="https://www.youtube.com/@mantasrl" />
-            <SocialIcon icon={Instagram} href="https://www.instagram.com/mantasrl/" />
-            <SocialIcon icon={Twitter} href="https://x.com/mantasrlsgo/" />
-            <SocialIcon icon={MessageCircle} href="#" />
+            <SocialIcon icon={LinkedinLogo} href="https://www.linkedin.com/in/ignacio-simonetti-7148b6ba/" />
+            <SocialIcon icon={YoutubeLogo} href="https://www.youtube.com/@mantasrl" />
+            <SocialIcon icon={InstagramLogo} href="https://www.instagram.com/mantasrl/" />
+            <SocialIcon icon={XLogo} href="https://x.com/mantasrlsgo/" />
+            <SocialIcon icon={ChatCircleText} href="#" />
         </div>
     );
 };

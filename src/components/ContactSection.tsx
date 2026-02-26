@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { Send, Check, Copy, Instagram, Linkedin, Twitter, Youtube, Sparkles, ChevronDown } from 'lucide-react';
+import { PaperPlaneTilt, Check, Copy, InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo, Sparkle, CaretDown } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { useProject, type ProjectType } from '../context/ProjectContext';
 import TiltedCard from './TiltedCard';
@@ -82,36 +82,23 @@ const ContactSection = () => {
         }
     };
 
-    const inputClasses = "w-full bg-white/[0.06] border border-white/[0.12] rounded-2xl px-6 py-4 text-white font-sans focus:outline-none focus:border-primary/60 focus:bg-white/[0.10] focus:shadow-[0_0_0_3px_rgba(255,0,255,0.08)] transition-all duration-500 placeholder:text-white/30 hover:border-white/20";
+    const inputClasses = "w-full bg-transparent border-0 border-b-2 border-black/10 focus:border-primary focus:bg-black/[0.02] px-4 py-4 rounded-t-sm transition-all placeholder:text-black/30 text-lg text-black outline-none";
 
     return (
-        <section id="contacto" ref={containerRef} className="relative py-32 px-6 md:px-12 bg-[#080808] overflow-hidden">
-            {/* Ambient Background Pattern */}
-            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-                style={{ backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`, backgroundSize: '40px 40px' }}
+        <section id="contacto" ref={containerRef} className="relative py-32 px-6 md:px-12 bg-paper-light overflow-hidden">
+            {/* Technical Grid Overlay */}
+            <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)',
+                    backgroundSize: '80px 80px'
+                }}
             />
 
-            {/* Animated Background Decorative Elements */}
-            <motion.div
-                animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.15, 0.3, 0.15],
-                    x: [0, 50, 0],
-                    y: [0, -30, 0]
-                }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/20 blur-[180px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"
-            />
-            <motion.div
-                animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.1, 0.25, 0.1],
-                    x: [0, -40, 0],
-                    y: [0, 40, 0]
-                }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 1 }}
-                className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none"
-            />
+            {/* Light Ink Splatter (Subtle) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-5 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] ink-wash rotate-45 scale-150" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] ink-wash -rotate-12" />
+            </div>
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-start relative z-10">
 
@@ -124,20 +111,21 @@ const ContactSection = () => {
                     className="space-y-16"
                 >
                     <div className="space-y-8">
-                        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-primary text-[10px] font-mono uppercase tracking-widest">
-                            <Sparkles size={10} className="text-primary" />
+                        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 bg-transparent border border-black/10 text-[10px] font-mono uppercase tracking-widest text-black/60 rounded-full">
+                            <Sparkle weight="fill" size={10} className="text-primary animate-pulse" />
                             Contacto Directo
                         </motion.div>
 
-                        <motion.h2
-                            variants={itemVariants}
-                            className="text-7xl md:text-9xl font-display font-medium text-white tracking-tighter leading-[0.85] filter drop-shadow-2xl"
-                        >
-                            Elevamos <br /><span className="text-white/20 italic font-light">tu escala.</span>
-                        </motion.h2>
+                        <motion.div variants={itemVariants} className="relative">
+                            <h2 className="text-5xl md:text-8xl lg:text-9xl font-display font-bold text-black tracking-tighter leading-[0.85]">
+                                Elevamos <br />
+                                <span className="text-black/30 italic font-serif font-light block mt-2">tu escala.</span>
+                            </h2>
+                            <div className="absolute -z-10 -top-10 -left-10 w-48 h-48 bg-primary opacity-5 blur-3xl rounded-full"></div>
+                        </motion.div>
 
-                        <motion.p variants={itemVariants} className="text-xl text-white/40 max-w-md font-sans leading-relaxed">
-                            Diseñamos experiencias que no solo se ven bien, sino que <span className="text-white/70">generan impacto real.</span> ¿Hablamos?
+                        <motion.p variants={itemVariants} className="text-lg md:text-xl text-black/60 max-w-sm font-light leading-relaxed mt-6">
+                            Diseñamos experiencias que no solo se ven bien, sino que <strong className="text-black font-medium border-b-2 border-primary/30">generan impacto real.</strong> <br />¿Hablamos?
                         </motion.p>
                     </div>
 
@@ -148,55 +136,54 @@ const ContactSection = () => {
                             className="group cursor-pointer w-fit"
                             onClick={copyEmail}
                         >
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/20 mb-4 font-mono">Línea de Enlace</p>
-                            <div className="flex items-center gap-6 text-3xl md:text-5xl text-white font-display transition-all duration-700 group-hover:tracking-tight hover:text-primary">
-                                <span className="relative">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-black/40 mb-4 font-mono">Línea de Enlace / Email</p>
+                            <div className="flex items-center gap-4 text-xl sm:text-3xl md:text-5xl text-black font-display font-medium transition-all duration-700 hover:text-primary">
+                                <span className="relative break-all">
                                     hola@manta.com.ar
-                                    <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-primary transition-all duration-700 group-hover:w-full" />
                                 </span>
-                                <div className="p-4 rounded-full bg-white/5 border border-white/10 group-hover:bg-primary group-hover:border-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-1000 ease-in-out">
-                                    {copied ? <Check size={18} /> : <Copy size={18} />}
+                                <div className="p-4 bg-transparent border border-black/10 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-500 ease-in-out group-hover:rotate-12 rounded-sm">
+                                    {copied ? <Check weight="bold" size={18} /> : <Copy weight="bold" size={18} />}
                                 </div>
                             </div>
                         </motion.div>
 
-                        <motion.div variants={itemVariants} className="space-y-6">
-                            <p className="text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono">Canales</p>
-                            <div className="flex gap-4">
+                        <motion.div variants={itemVariants} className="space-y-4 pt-4">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-black/40 font-mono mb-6">Canales Sociales</p>
+                            <div className="flex gap-3">
                                 {[
-                                    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/mantasrl/' },
-                                    { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ignacio-simonetti-7148b6ba/' },
-                                    { icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@mantasrl' },
-                                    { icon: Twitter, label: 'X', href: 'https://x.com/mantasrlsgo/' }
+                                    { icon: InstagramLogo, label: 'Instagram', href: 'https://www.instagram.com/mantasrl/' },
+                                    { icon: LinkedinLogo, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ignacio-simonetti-7148b6ba/' },
+                                    { icon: YoutubeLogo, label: 'YouTube', href: 'https://www.youtube.com/@mantasrl' },
+                                    { icon: XLogo, label: 'X', href: 'https://x.com/mantasrlsgo/' }
                                 ].map((social, i) => (
                                     <motion.a
                                         key={i}
                                         href={social.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        whileHover={{ y: -8, scale: 1.1, backgroundColor: "rgba(255,0,255,0.1)", borderColor: "rgba(255,0,255,0.4)" }}
-                                        whileTap={{ scale: 0.9 }}
-                                        className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all duration-500 shadow-xl"
+                                        whileHover={{ y: -4, backgroundColor: "rgba(217, 2, 109, 0.05)", borderColor: "rgba(217, 2, 109, 0.3)", color: "var(--color-primary)" }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="w-12 h-12 bg-transparent backdrop-blur-sm border border-black/10 flex items-center justify-center text-black/50 hover:text-primary transition-all duration-300 rounded-sm"
                                     >
-                                        <social.icon size={20} strokeWidth={1.5} />
+                                        <social.icon weight="fill" size={20} />
                                     </motion.a>
                                 ))}
                             </div>
                         </motion.div>
                     </div>
 
-                    <motion.div variants={itemVariants} className="pt-12 border-t border-white/5 hidden lg:block">
-                        <div className="flex items-center gap-4 text-white/20 font-mono text-[9px] uppercase tracking-[0.3em] bg-white/[0.01] border border-white/[0.04] px-6 py-4 rounded-full w-fit backdrop-blur-sm">
+                    <motion.div variants={itemVariants} className="pt-12 border-t border-black/5 hidden lg:block">
+                        <div className="flex items-center gap-4 text-black/40 font-mono text-[9px] uppercase tracking-[0.3em] bg-transparent border border-black/5 px-6 py-4 rounded-sm w-fit">
                             <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/40 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                <span className="absolute inline-flex h-full w-full bg-primary opacity-20"></span>
+                                <span className="relative inline-flex h-2 w-2 bg-primary"></span>
                             </span>
                             Estudio Operativo · Argentina / Global
                         </div>
                     </motion.div>
                 </motion.div>
 
-                {/* Right Content: Atelier Form with Tilted Card Effect */}
+                {/* Right Content: Vellum Form */}
                 <motion.div
                     variants={itemVariants}
                     initial="hidden"
@@ -206,27 +193,18 @@ const ContactSection = () => {
                 >
                     <TiltedCard
                         showTooltip={false}
-                        rotateAmplitude={5}
+                        rotateAmplitude={3}
                         containerClassName="h-full"
                     >
-                        <div className="relative glass-card-dark bg-[#111111] p-8 md:p-14 rounded-[3.5rem] overflow-hidden min-h-[600px] shadow-[0_50px_100px_rgba(0,0,0,0.8)] group">
-                            {/* Inner Glow - Refined for better depth */}
-                            <div className="absolute -top-24 -right-24 w-80 h-80 bg-primary/20 blur-[100px] rounded-full pointer-events-none opacity-50" />
-                            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none" />
+                        <div className="relative vellum p-5 sm:p-8 md:p-14 border border-black/10 hatch-shadow min-h-[600px] group overflow-visible">
 
-                            <div className="absolute top-0 right-0 p-10">
-                                <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                    className="w-14 h-14 rounded-full border border-white/5 flex items-center justify-center text-white/20"
-                                >
-                                    <Sparkles size={24} />
-                                </motion.div>
-                            </div>
+                            {/* Technical Corner Bracket */}
+                            <div className="absolute top-0 right-0 w-16 h-16 border-t font-mono border-black/10 border-r" />
 
                             <div className="mb-14 relative">
-                                <h3 className="text-4xl font-display text-white mb-3 tracking-tight">Inicio del Vínculo</h3>
-                                <p className="text-white/50 text-base font-sans font-light">Describe tu visión y tracemos el camino juntos.</p>
+                                <span className="text-primary font-mono text-[10px] tracking-widest uppercase mb-4 block">Fase 01</span>
+                                <h3 className="text-4xl font-display text-black mb-3 tracking-tight">Inicio del Vínculo</h3>
+                                <p className="text-black/60 text-base font-sans font-normal leading-relaxed">Describe tu visión y tracemos el camino juntos.</p>
                             </div>
 
                             <AnimatePresence mode="wait">
@@ -235,14 +213,14 @@ const ContactSection = () => {
                                         key="form"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                                        exit={{ opacity: 0, scale: 0.98 }}
                                         transition={{ duration: 0.5 }}
                                         onSubmit={handleSubmit}
                                         className="space-y-10 relative"
                                     >
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                             <div className="space-y-3 group">
-                                                <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Tu Identidad</label>
+                                                <label className="text-[10px] uppercase tracking-[0.2em] text-black/40 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Tu Identidad</label>
                                                 <input
                                                     name="name"
                                                     required
@@ -252,7 +230,7 @@ const ContactSection = () => {
                                                 />
                                             </div>
                                             <div className="space-y-3 group">
-                                                <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Vía de Contacto</label>
+                                                <label className="text-[10px] uppercase tracking-[0.2em] text-black/40 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Vía de Contacto</label>
                                                 <input
                                                     name="email"
                                                     required
@@ -264,39 +242,38 @@ const ContactSection = () => {
                                         </div>
 
                                         <div className="space-y-3 group relative">
-                                            <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Categoría del Desafío</label>
+                                            <label className="text-[10px] uppercase tracking-[0.2em] text-black/40 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Categoría del Desafío</label>
                                             <div className="relative">
                                                 <div
-                                                    className={cn(inputClasses, "cursor-pointer flex justify-between items-center", formState === 'submitting' && "opacity-50 pointer-events-none")}
+                                                    className={cn(inputClasses, "cursor-pointer flex justify-between items-center group/dropdown", formState === 'submitting' && "opacity-50 pointer-events-none")}
                                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                                 >
-                                                    <span className={selectedProject ? "text-white" : "text-white/30"}>
+                                                    <span className={selectedProject ? "text-black" : "text-black/30"}>
                                                         {selectedProject || "Selecciona una categoría"}
                                                     </span>
                                                     <motion.div animate={{ rotate: isDropdownOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                                        <ChevronDown size={16} className="text-white/30 group-focus-within:text-primary transition-colors" />
+                                                        <CaretDown weight="bold" size={14} className="text-black/30 group-focus-within:text-primary transition-colors" />
                                                     </motion.div>
                                                 </div>
                                                 <AnimatePresence>
                                                     {isDropdownOpen && (
                                                         <motion.div
-                                                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                                                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                                                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                                                            transition={{ duration: 0.2 }}
-                                                            className="absolute top-full left-0 w-full mt-2 bg-[#1A1A1A]/95 backdrop-blur-3xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50 p-2"
+                                                            initial={{ opacity: 0, y: 5 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            exit={{ opacity: 0, y: 5 }}
+                                                            className="absolute top-full left-0 w-full mt-2 bg-[#F4F1EA] border border-black/10 rounded-sm overflow-hidden z-50 hatch-shadow"
                                                         >
                                                             {categories.map((cat) => (
                                                                 <div
                                                                     key={cat}
-                                                                    className={cn("px-4 py-3 rounded-xl cursor-pointer text-sm font-sans transition-colors duration-300 flex items-center justify-between", selectedProject === cat ? "bg-primary/20 text-white" : "text-white/60 hover:text-white hover:bg-white/5")}
+                                                                    className={cn("px-6 py-4 cursor-pointer text-sm font-sans transition-colors duration-300 flex items-center justify-between", selectedProject === cat ? "bg-black/[0.03] text-primary" : "text-black/60 hover:text-black hover:bg-black/[0.02]")}
                                                                     onClick={() => {
                                                                         setSelectedProject(cat as ProjectType);
                                                                         setIsDropdownOpen(false);
                                                                     }}
                                                                 >
                                                                     {cat}
-                                                                    {selectedProject === cat && <Check size={14} className="text-primary" />}
+                                                                    {selectedProject === cat && <Check weight="bold" size={14} className="text-primary" />}
                                                                 </div>
                                                             ))}
                                                         </motion.div>
@@ -306,7 +283,7 @@ const ContactSection = () => {
                                         </div>
 
                                         <div className="space-y-3 group">
-                                            <label className="text-[10px] uppercase tracking-[0.2em] text-white/60 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">La Visión</label>
+                                            <label className="text-[10px] uppercase tracking-[0.2em] text-black/40 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">La Visión</label>
                                             <textarea
                                                 name="message"
                                                 rows={4}
@@ -320,25 +297,25 @@ const ContactSection = () => {
                                         <motion.button
                                             type="submit"
                                             disabled={formState !== 'idle'}
-                                            whileHover={formState === 'idle' ? { scale: 1.02, y: -2, backgroundColor: "#ffffff", color: "#000000" } : {}}
-                                            whileTap={formState === 'idle' ? { scale: 0.98 } : {}}
                                             className={cn(
-                                                "w-full py-6 rounded-2xl font-display font-medium text-[11px] tracking-[4px] uppercase transition-all duration-700 relative overflow-hidden group/btn shadow-2xl",
+                                                "w-full py-6 rounded-none font-bold uppercase tracking-widest text-[12px] transition-all duration-300",
                                                 formState === 'idle'
-                                                    ? "bg-white text-black hover:shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
-                                                    : "bg-white/10 text-white/40 cursor-default"
+                                                    ? "bg-black text-white hover:bg-black/80 hover:hatch-shadow hover:-translate-y-1"
+                                                    : formState === 'submitting'
+                                                        ? "bg-black/20 text-black cursor-not-allowed"
+                                                        : "bg-primary text-white cursor-not-allowed"
                                             )}
                                         >
                                             <AnimatePresence mode="wait">
                                                 {formState === 'idle' && (
                                                     <motion.div
                                                         key="idle"
-                                                        initial={{ opacity: 0, scale: 0.9 }}
-                                                        animate={{ opacity: 1, scale: 1 }}
-                                                        exit={{ opacity: 0, scale: 1.1 }}
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
                                                         className="flex items-center justify-center gap-4"
                                                     >
-                                                        Enviar Propuesta <Send size={14} className="group-hover/btn:translate-x-2 group-hover/btn:-translate-y-2 transition-transform duration-500" />
+                                                        Enviar Iniciativa <PaperPlaneTilt weight="bold" size={14} />
                                                     </motion.div>
                                                 )}
                                                 {formState === 'submitting' && (
@@ -346,11 +323,10 @@ const ContactSection = () => {
                                                         key="submitting"
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
-                                                        exit={{ opacity: 0 }}
                                                         className="flex items-center justify-center gap-3"
                                                     >
-                                                        <div className="w-4 h-4 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
-                                                        Procesando Visión...
+                                                        <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                                        Procesando...
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
@@ -359,35 +335,23 @@ const ContactSection = () => {
                                 ) : (
                                     <motion.div
                                         key="success-message"
-                                        initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-                                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                                        transition={{ duration: 0.5, delay: 0.2 }}
-                                        className="absolute inset-0 flex flex-col items-center justify-center text-center bg-[#111111] z-10"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-10"
                                     >
-                                        <motion.div
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
-                                            className="w-24 h-24 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-8 text-primary shadow-[0_0_50px_rgba(255,0,255,0.2)]"
-                                        >
-                                            <Check size={40} strokeWidth={1.5} />
-                                        </motion.div>
-                                        <motion.h4
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.5 }}
-                                            className="text-4xl md:text-5xl font-display text-white mb-4 tracking-tight"
-                                        >
-                                            Iniciativa Recibida
-                                        </motion.h4>
-                                        <motion.p
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.6 }}
-                                            className="text-white/50 font-sans text-lg max-w-sm mx-auto leading-relaxed"
-                                        >
-                                            Hemos capturado tu visión. Nos pondremos en contacto contigo a la brevedad para materializar el siguiente paso.
-                                        </motion.p>
+                                        <div className="w-24 h-24 bg-primary/5 border border-primary/20 flex items-center justify-center mb-8 text-primary rounded-sm shadow-sm">
+                                            <motion.div
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ type: "spring", stiffness: 200 }}
+                                            >
+                                                <Check weight="bold" size={40} />
+                                            </motion.div>
+                                        </div>
+                                        <h4 className="text-4xl font-display text-black mb-4 tracking-tight">Iniciativa Recibida</h4>
+                                        <p className="text-black/60 font-sans text-lg max-w-sm mx-auto leading-relaxed">
+                                            Hemos capturado tu visión. Nos pondremos en contacto contigo a la brevedad.
+                                        </p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -397,15 +361,15 @@ const ContactSection = () => {
             </div>
 
             {/* Aesthetic Footer Detail */}
-            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[8px] font-mono text-white/10 uppercase tracking-[0.5em]">
+            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[8px] font-mono text-black/40 uppercase tracking-[0.5em]">
                 <div className="order-2 md:order-1 flex items-center gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/5" />
-                    Manta Studio © 2026 · Digital Atelier
+                    <span className="w-1.5 h-1.5 bg-black/10" />
+                    Manta Studio © {new Date().getFullYear()} · Digital Atelier
                 </div>
                 <div className="order-1 md:order-2 flex gap-10">
-                    <a href="#" className="hover:text-white transition-colors duration-500">Privacy</a>
-                    <a href="#" className="hover:text-white transition-colors duration-500">Terms</a>
-                    <a href="#" className="hover:text-white transition-colors duration-500">Legal</a>
+                    <a href="#" className="hover:text-black transition-colors duration-500">Privacy</a>
+                    <a href="#" className="hover:text-black transition-colors duration-500">Terms</a>
+                    <a href="#" className="hover:text-black transition-colors duration-500">Legal</a>
                 </div>
             </div>
         </section>
@@ -413,4 +377,3 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
-

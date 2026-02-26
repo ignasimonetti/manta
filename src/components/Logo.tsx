@@ -31,6 +31,9 @@ export const Logo: React.FC<LogoProps> = ({ className = "h-8 w-auto", variant = 
                 ...style // Allow style overrides if necessary
             }}
             draggable={false}
+            onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+            }}
         />
     );
 };

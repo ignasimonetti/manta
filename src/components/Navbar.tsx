@@ -1,192 +1,188 @@
 import React from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-
+import { SquaresFour, Briefcase, Target, TestTube, EnvelopeSimple } from '@phosphor-icons/react';
 import { Logo } from './Logo';
 
 
+
+
+const StickyLogo: React.FC<{ opacity: any }> = ({ opacity }) => {
+    const mouseX = useSpring(0, { stiffness: 150, damping: 15 });
+    const mouseY = useSpring(0, { stiffness: 150, damping: 15 });
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distanceX = e.clientX - centerX;
+        const distanceY = e.clientY - centerY;
+
+        // Limited magnetic pull
+        mouseX.set(distanceX * 0.35);
+        mouseY.set(distanceY * 0.35);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        mouseX.set(0);
+        mouseY.set(0);
+    };
+
+    return (
+        <motion.div
+            className="fixed top-6 left-6 md:top-8 md:left-10 z-[60] pointer-events-none"
+            style={{ opacity }}
+        >
+            <motion.div
+                onMouseMove={handleMouseMove}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={handleMouseLeave}
+                style={{ x: mouseX, y: mouseY }}
+                className="pointer-events-auto relative group"
+            >
+                <Link to="/" className="block">
+                    {/* Layered Glitch Effect on Hover */}
+                    <div className="relative">
+                        {/* Red Layer */}
+                        <motion.div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                            animate={isHovered ? { x: [-1, 2, -2, 1, 0], y: [1, -1, 1, 0] } : {}}
+                            transition={{ repeat: Infinity, duration: 0.2 }}
+                            style={{ filter: 'drop-shadow(2px 0px 0px rgba(255,0,0,0.5))' }}
+                        >
+                            <Logo className="h-14 md:h-20 w-auto grayscale brightness-75 contrast-125" variant="dark" />
+                        </motion.div>
+
+                        {/* Blue Layer */}
+                        <motion.div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                            animate={isHovered ? { x: [2, -1, 1, -2, 0], y: [-1, 1, 0] } : {}}
+                            transition={{ repeat: Infinity, duration: 0.25 }}
+                            style={{ filter: 'drop-shadow(-2px 0px 0px rgba(0,0,255,0.5))' }}
+                        >
+                            <Logo className="h-14 md:h-20 w-auto grayscale brightness-125 contrast-75" variant="dark" />
+                        </motion.div>
+
+                        {/* Main Logo */}
+                        <motion.div
+                            animate={{ scale: isHovered ? 1.05 : 1 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                        >
+                            <Logo className="h-14 md:h-20 w-auto" variant="dark" />
+                        </motion.div>
+                    </div>
+                </Link>
+            </motion.div>
+        </motion.div>
+    );
+};
+
 const Navbar: React.FC = () => {
-    const { scrollY } = useScroll();
+    const { scrollY, scrollYProgress } = useScroll();
     const [vh, setVh] = React.useState(typeof window !== 'undefined' ? window.innerHeight : 800);
-    const [logoVariant, setLogoVariant] = React.useState<'dark' | 'light'>('dark');
-    const [targetX, setTargetX] = React.useState(0);
+    const [hovered, setHovered] = React.useState<number | null>(null);
 
     React.useEffect(() => {
         const updateVh = () => setVh(window.innerHeight);
-        const calculateTarget = () => {
-            const container = document.querySelector('.nav-container');
-            if (container) {
-                const containerWidth = container.clientWidth;
-                const logoWidth = window.innerWidth >= 768 ? 320 : 240; // md:w-80 (320px) | w-60 (240px)
-                setTargetX(containerWidth - logoWidth);
-            }
-        };
-
-        const handleResize = () => {
-            updateVh();
-            calculateTarget();
-        };
-
         updateVh();
-        calculateTarget();
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener('resize', updateVh);
+        return () => window.removeEventListener('resize', updateVh);
     }, []);
 
-    // Switch logo variant based on scroll position (same as theme switch point)
-    useMotionValueEvent(scrollY, "change", (latest) => {
-        const threshold = vh * 3.0;
-        setLogoVariant(latest > threshold ? 'light' : 'dark');
-    });
+    // Global Visibility: Fades out completely as we reach the footer (last ~5% of scroll)
+    const globalHideOpacity = useTransform(scrollYProgress, [0.88, 0.92], [1, 0]);
 
-    // Unified navbar appearance — starts as we move into the ascent phase (Act II)
-    const navbarOpacityRaw = useTransform(scrollY, [vh * 1.5, vh * 2.0], [0, 1]);
-    const navbarOpacity = useSpring(navbarOpacityRaw, { stiffness: 60, damping: 20 });
+    // Unified navbar appearance — starts AFTER the hero animation ends (~2.7vh)
+    const navbarOpacityRaw = useTransform(scrollY, [vh * 2.5, vh * 2.8], [0, 1]);
+    const navbarSpringOpacity = useSpring(navbarOpacityRaw, { stiffness: 60, damping: 20 });
 
-    // Background & Glassmorphism — increases as we approach the landing (Act III)
-    const bgOpacity = useTransform(scrollY, [vh * 2.0, vh * 2.5], [0, 0.95]);
-    const blurAmount = useTransform(scrollY, [vh * 2.0, vh * 2.5], [0, 20]);
-
-    // Theme Switch: White -> Dark (Transition starts at ParticlesSection approx 3.5vh)
-    const bgColor = useTransform(
-        scrollY,
-        [vh * 2.5, vh * 3.5],
-        ["rgba(255, 255, 255, 1)", "rgba(10, 10, 10, 0.8)"]
+    // Combine with global hide
+    const navbarOpacity = useTransform(
+        [navbarSpringOpacity, globalHideOpacity],
+        ([nav, hide]) => (nav as number) * (hide as number)
     );
 
-    const textColor = useTransform(
-        scrollY,
-        [vh * 2.5, vh * 3.5],
-        ["#2d2d2d", "#ffffff"]
+    // Permanent Light Glassmorphism — more premium
+    const bgColor = "rgba(255, 255, 255, 0.82)";
+    const textColor = "#1a1a1a";
+    const borderColor = "rgba(0, 0, 0, 0.04)";
+
+    // Sticky Logo Reveal — Decoupled Branding
+    const stickyLogoOpacityRaw = useTransform(scrollY, [vh * 2.5, vh * 2.8], [0, 1]);
+    const stickyLogoOpacity = useTransform(
+        [stickyLogoOpacityRaw, globalHideOpacity],
+        ([logo, hide]) => (logo as number) * (hide as number)
     );
 
-    const borderColor = useTransform(
-        scrollY,
-        [vh * 2.5, vh * 3.5],
-        ["rgba(0,0,0,0.05)", "rgba(255,255,255,0.1)"]
-    );
-
-    // Evolving Navigation Thresholds
-    const navTransitionStart = vh * 3.0;
-    const navTransitionEnd = vh * 3.8;
-
-    // Links Visibility
-    const linksOpacity = useTransform(scrollY, [navTransitionStart, navTransitionEnd - vh * 0.3], [1, 0]);
-    const linksY = useTransform(scrollY, [navTransitionStart, navTransitionEnd - vh * 0.3], [0, -10]);
-
-    // Logo Position Transition (Move to right)
-    // We dynamically calculate targetX based on the container width
-    const logoX = useTransform(scrollY, [navTransitionStart, navTransitionEnd], [0, targetX]);
-
-    // Logo Handover — cross-fades with flying logo and anchors permanently
-    const logoOpacity = useTransform(scrollY, [vh * 2.5, vh * 2.7], [0, 1]);
-    const logoScale = useTransform(scrollY, [vh * 2.5, vh * 2.9], [1.5, 1]);
-    const smoothLogoScale = useSpring(logoScale, { stiffness: 50, damping: 25 });
+    const navItems = [
+        { name: 'Servicios', icon: <SquaresFour size={18} weight="thin" />, href: '#servicios', type: 'anchor' as const },
+        { name: 'Proyectos', icon: <Briefcase size={18} weight="thin" />, href: '#proyectos', type: 'anchor' as const },
+        { name: 'Enfoque', icon: <Target size={18} weight="thin" />, href: '#enfoque', type: 'anchor' as const },
+        { name: 'Lab', icon: <TestTube size={18} weight="thin" />, href: '/lab', type: 'link' as const },
+        { name: 'Contacto', icon: <EnvelopeSimple size={18} weight="thin" />, href: '#contacto', type: 'anchor' as const },
+    ];
 
     return (
-        <motion.nav
-            className="fixed top-0 left-0 right-0 z-50 md:px-12 px-6 py-3"
-            style={{
-                opacity: navbarOpacity,
-                backgroundColor: bgColor,
-                backdropFilter: useTransform(blurAmount, (b) => `blur(${b}px)`),
-                color: textColor,
-                borderBottom: useTransform(borderColor, (c) => `1px solid ${c}`),
-                boxShadow: useTransform(bgOpacity, (o) => o > 0.1 ? '0 10px 40px rgba(0,0,0,0.1)' : 'none')
-            }}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-                duration: 1.6,
-                ease: "easeOut",
-                opacity: { duration: 1.2 }
-            }}
-        >
-            <div className="nav-container max-w-7xl mx-auto flex justify-between items-center text-deep-charcoal dark:text-white relative">
-                {/* The Logo that appears after the Hero flight - Bold brand presence */}
-                <motion.div
-                    // Increased size as requested: w-48->w-60, h-12->h-16 (mobile) | w-56->w-80, h-14->h-24 (desktop)
-                    className="w-60 h-16 md:w-80 md:h-24 relative flex items-center justify-start z-10"
-                    style={{
-                        opacity: logoOpacity,
-                        scale: smoothLogoScale,
-                        x: logoX
-                    }}
-                >
-                    <Logo className="h-full w-auto" variant={logoVariant} />
-                </motion.div>
+        <div>
+            <StickyLogo opacity={stickyLogoOpacity} />
 
-                <motion.div
-                    className="hidden md:flex gap-12 items-center"
-                    style={{
-                        opacity: linksOpacity,
-                        y: linksY,
-                        pointerEvents: useTransform(linksOpacity, (o) => o < 0.1 ? 'none' : 'auto')
-                    }}
-                >
-                    {[
-                        { label: 'Servicios', id: 'servicios', type: 'anchor' },
-                        { label: 'Proyectos', id: 'proyectos', type: 'anchor' },
-                        { label: 'Enfoque', id: 'enfoque', type: 'anchor' },
-                        { label: 'Lab', id: 'lab', type: 'link' }
-                    ].map((item) => (
-                        item.type === 'link' ? (
-                            <Link
-                                key={item.id}
-                                to="/lab"
-                                className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:text-magenta transition-colors relative group"
+            <motion.nav
+                className="fixed top-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-2rem)] z-50 flex items-center p-1.5 md:p-2 rounded-full border shadow-xl backdrop-blur-xl"
+                style={{
+                    opacity: navbarOpacity,
+                    y: 0,
+                    backgroundColor: bgColor,
+                    color: textColor,
+                    borderColor: borderColor,
+                }}
+            >
+                {/* Navigation Items (Dock style) */}
+                <div className="flex items-center gap-0.5 md:gap-2">
+                    {navItems.map((item, idx) => {
+                        const isActive = hovered === idx;
+                        const content = (
+                            <div
+                                className={`relative px-3 py-3 md:px-4 md:py-2 rounded-full flex items-center gap-2.5 group transition-all duration-300 ${isActive ? 'text-primary' : 'text-black/50 hover:text-black/80'}`}
+                                onMouseEnter={() => setHovered(idx)}
+                                onMouseLeave={() => setHovered(null)}
                             >
-                                {item.label}
-                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-magenta transition-all duration-300 group-hover:w-full" />
+                                <span className="relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                                    {item.icon}
+                                </span>
+                                <span className="hidden md:inline relative z-10 font-sans text-[11px] font-bold uppercase tracking-[0.25em]">
+                                    {item.name}
+                                </span>
+
+                                <AnimatePresence>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="nav-hover-bg"
+                                            className="absolute inset-0 bg-primary/5 rounded-full -z-10"
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                        />
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        );
+
+                        return item.type === 'link' ? (
+                            <Link key={item.name} to={item.href}>
+                                {content}
                             </Link>
                         ) : (
-                            <motion.a
-                                key={item.id}
-                                href={`/#${item.id}`}
-                                className="font-sans text-[10px] font-bold uppercase tracking-[0.3em] hover:text-magenta transition-colors relative group"
-                                whileHover={{ y: -1 }}
-                            >
-                                {item.label}
-                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-magenta transition-all duration-300 group-hover:w-full" />
-                            </motion.a>
-                        )
-                    ))}
-
-                    <a href="#contacto">
-                        <motion.button
-                            className="px-8 py-2.5 bg-current text-current invert-0 dark:invert rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-magenta hover:text-white transition-all shadow-xl"
-                            style={{
-                                backgroundColor: textColor,
-                                color: useTransform(textColor, (t) => t === "#ffffff" ? "#000000" : "#ffffff")
-                            }}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            HABLEMOS
-                        </motion.button>
-                    </a>
-                </motion.div>
-
-                {/* Mobile Menu Icon */}
-                <motion.div
-                    className="md:hidden flex flex-col gap-1.5 cursor-pointer group"
-                    style={{
-                        opacity: linksOpacity,
-                        pointerEvents: useTransform(linksOpacity, (o) => o < 0.1 ? 'none' : 'auto')
-                    }}
-                >
-                    <motion.div
-                        className="w-6 h-[1px] group-hover:bg-magenta transition-colors"
-                        style={{ backgroundColor: textColor }}
-                    />
-                    <motion.div
-                        className="w-4 h-[1px] group-hover:bg-magenta transition-colors self-end"
-                        style={{ backgroundColor: textColor }}
-                    />
-                </motion.div>
-            </div>
-        </motion.nav >
+                            <a key={item.name} href={item.href}>
+                                {content}
+                            </a>
+                        );
+                    })}
+                </div>
+            </motion.nav>
+        </div>
     );
 };
 

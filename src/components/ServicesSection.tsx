@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
-import { Layers, Globe, Cpu, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from '@phosphor-icons/react';
+import { useProject, type ProjectType } from '../context/ProjectContext';
+import TiltedCard from './TiltedCard';
 
 interface ServiceCard {
     title: string;
@@ -12,55 +14,81 @@ interface ServiceCard {
     accent: string;
 }
 
+const Totem3D = () => (
+    <svg viewBox="0 0 100 100" className="w-12 h-12 fill-current">
+        <path d="M50 10 L85 30 L85 70 L50 90 L15 70 L15 30 Z" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M50 10 V50 L85 30 M50 50 L15 30" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M50 90 V50" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="50" cy="50" r="5" fill="currentColor" />
+    </svg>
+);
+
+const TotemIdentity = () => (
+    <svg viewBox="0 0 100 100" className="w-12 h-12 fill-current">
+        <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M50 5 V95 M5 50 H95" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" />
+        <rect x="35" y="35" width="30" height="30" fill="none" stroke="currentColor" strokeWidth="3" />
+        <path d="M20 20 L40 40 M80 20 L60 40 M20 80 L40 60 M80 80 L60 60" fill="none" stroke="currentColor" strokeWidth="2" />
+    </svg>
+);
+
+const TotemApp = () => (
+    <svg viewBox="0 0 100 100" className="w-12 h-12 fill-current">
+        <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M20 50 H80 M50 20 V80" fill="none" stroke="currentColor" strokeWidth="1" />
+        <path d="M35 35 L65 65 M65 35 L35 65" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="20" cy="20" r="4" />
+        <circle cx="80" cy="20" r="4" />
+        <circle cx="20" cy="80" r="4" />
+        <circle cx="80" cy="80" r="4" />
+    </svg>
+);
+
 const services: ServiceCard[] = [
     {
         title: 'Landings 3D',
-        subtitle: 'Páginas de Conversión Boutique',
+        subtitle: 'Conversión Boutique',
         description:
-            'Páginas de conversión artesanales con efectos 3D inmersivos. Cada landing es una pieza única, diseñada para capturar la atención y transformar visitantes en clientes.',
-        icon: <Layers size={28} strokeWidth={1.5} />,
-        tag: '3 días',
-        timeline: 'USD 500',
-        accent: 'from-fuchsia-500/20 to-violet-600/10',
+            'Cada landing es un plano vivo, diseñado para capturar la atención con la precisión de un gesto manual y tecnología de vanguardia.',
+        icon: <Totem3D />,
+        tag: '4 días',
+        timeline: 'USD 350',
+        accent: 'from-primary/20 to-transparent',
     },
     {
         title: 'Boutique Sites',
-        subtitle: 'Identidad Visual Completa',
+        subtitle: 'Sistemas de Identidad',
         description:
-            'Identidad visual completa + sitio web profesional personalizado. Cada pixel es un trazo deliberado que comunica la esencia de tu marca con la precisión de un relojero.',
-        icon: <Globe size={28} strokeWidth={1.5} />,
-        tag: '1 semana',
-        timeline: 'USD 1K',
-        accent: 'from-primary/20 to-rose-500/10',
+            'Identidad visual completa + sitio web. Cada pixel es un trazo deliberado que comunica la esencia de tu marca con elegancia técnica.',
+        icon: <TotemIdentity />,
+        tag: '2 semanas',
+        timeline: 'USD 850 – 1K',
+        accent: 'from-silver-industrial/20 to-transparent',
     },
     {
         title: 'SaaS Apps',
-        subtitle: 'Desarrollo a Medida High-End',
+        subtitle: 'Ingeniería de Producto',
         description:
-            'Desarrollo a medida para plataformas digitales. Arquitectura robusta, código limpio y diseño excepcional — la artesanía aplicada al software de alto rendimiento.',
-        icon: <Cpu size={28} strokeWidth={1.5} />,
+            'Arquitectura robusta y diseño excepcional — la artesanía aplicada al software de alto rendimiento y escala global.',
+        icon: <TotemApp />,
         tag: 'Custom',
         timeline: 'Hablemos',
-        accent: 'from-cyan-400/15 to-blue-500/10',
+        accent: 'from-primary/20 to-transparent',
     },
 ];
 
 const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 60, rotateX: 8 },
+    hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
         opacity: 1,
         y: 0,
-        rotateX: 0,
         transition: {
-            duration: 0.9,
+            duration: 0.8,
             delay: i * 0.15,
-            ease: [0.22, 1, 0.36, 1],
+            ease: [0.16, 1, 0.3, 1],
         },
     }),
 };
-
-import { useProject, type ProjectType } from '../context/ProjectContext';
-import TiltedCard from './TiltedCard';
 
 const ServiceCardComponent: React.FC<{ card: ServiceCard; index: number }> = ({
     card,
@@ -70,7 +98,6 @@ const ServiceCardComponent: React.FC<{ card: ServiceCard; index: number }> = ({
     const { setSelectedProject } = useProject();
 
     const handleCardClick = () => {
-        // Map card title to ProjectType
         let projectType: ProjectType = 'Otro';
         if (card.title === 'Landings 3D') projectType = 'Landing Page';
         else if (card.title === 'Boutique Sites') projectType = 'Boutique Sites';
@@ -96,103 +123,72 @@ const ServiceCardComponent: React.FC<{ card: ServiceCard; index: number }> = ({
             onMouseLeave={() => setIsHovered(false)}
         >
             <TiltedCard
-                captionText="Consultar"
+                captionText="Tallar"
                 containerClassName="h-full"
+                showTooltip={false}
             >
                 <div
                     onClick={handleCardClick}
-                    className={`relative overflow-hidden rounded-3xl border transition-all duration-700 cursor-pointer h-full
-                        ${isHovered
-                            ? 'border-primary/30 bg-white/[0.07] shadow-[0_0_60px_rgba(255,0,255,0.08)]'
-                            : 'border-white/[0.06] bg-white/[0.03]'
-                        }`}
+                    className={`relative overflow-hidden border transition-all duration-700 cursor-pointer h-full vellum
+                        ${isHovered ? 'hatch-shadow border-black/10' : 'border-black/5'}
+                    `}
                 >
-                    {/* Gradient accent overlay */}
+                    {/* Ink Splatter Backdrop on Hover */}
                     <div
-                        className={`absolute inset-0 bg-gradient-to-br ${card.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`}
+                        className={`absolute -top-10 -right-10 w-40 h-40 rounded-full ink-wash transition-all duration-1000 transform
+                            ${isHovered ? 'opacity-30 scale-150 rotate-12' : 'opacity-0 scale-50'}
+                        `}
                     />
 
-                    {/* Animated border glow */}
-                    <motion.div
-                        className="absolute -inset-px rounded-3xl pointer-events-none"
-                        style={{
-                            background: isHovered
-                                ? 'linear-gradient(135deg, rgba(255,0,255,0.15) 0%, transparent 50%, rgba(255,0,255,0.08) 100%)'
-                                : 'none',
-                        }}
-                        animate={{ opacity: isHovered ? 1 : 0 }}
-                        transition={{ duration: 0.5 }}
-                    />
-
-                    <div className="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[380px] [transform-style:preserve-3d]">
-                        {/* Header */}
-                        <div className="flex items-start justify-between mb-8 [transform:translateZ(30px)]">
+                    <div className="relative z-10 p-8 md:p-10 flex flex-col h-full min-h-[360px]">
+                        {/* Header: The Stamp */}
+                        <div className="flex items-start justify-between mb-12">
                             <motion.div
-                                className={`p-3 rounded-2xl transition-all duration-500
-                                    ${isHovered
-                                        ? 'bg-primary/20 text-primary'
-                                        : 'bg-white/[0.06] text-white/50'
-                                    }`}
-                                animate={isHovered ? { rotate: [0, -5, 5, 0] } : {}}
-                                transition={{ duration: 0.6 }}
+                                className={`transition-all duration-500 transform
+                                    ${isHovered ? 'text-primary scale-110' : 'text-black/40'}
+                                `}
                             >
                                 {card.icon}
                             </motion.div>
 
                             <motion.div
-                                className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                animate={isHovered ? { x: 0 } : { x: 10 }}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 pt-2"
+                                animate={isHovered ? { x: 0, y: 0 } : { x: 5, y: -5 }}
                             >
                                 <ArrowUpRight
-                                    size={20}
+                                    weight="bold"
+                                    size={16}
                                     className="text-primary"
                                 />
                             </motion.div>
                         </div>
 
                         {/* Content */}
-                        <div className="flex-1 [transform:translateZ(20px)]">
-                            <div className="flex items-center gap-3 mb-3">
-                                <span className="font-mono text-[10px] text-primary/80 uppercase tracking-[0.3em] px-3 py-1 rounded-full border border-primary/20 bg-primary/5">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-5">
+                                <span className="font-mono text-[9px] text-black/60 uppercase tracking-[0.4em] px-2 py-0.5 border border-black/20">
                                     {card.tag}
                                 </span>
                             </div>
 
-                            <h3 className="font-display text-2xl md:text-3xl font-medium text-white mb-2 tracking-tight">
+                            <h3 className="font-display text-2xl font-medium text-black mb-2 tracking-tight">
                                 {card.title}
                             </h3>
-                            <p className="font-mono text-xs text-white/30 uppercase tracking-widest mb-5">
+                            <p className="font-mono text-[10px] text-primary/60 uppercase tracking-[0.2em] mb-6">
                                 {card.subtitle}
                             </p>
-                            <p className="font-sans text-sm md:text-base text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-500">
+                            <p className="font-sans text-[15px] text-black/60 leading-relaxed font-normal group-hover:text-black transition-colors duration-500">
                                 {card.description}
                             </p>
                         </div>
 
-                        {/* Footer */}
-                        <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between [transform:translateZ(10px)]">
-                            <span className="font-display text-lg text-white/80 font-medium">
+                        {/* Technical Footer */}
+                        <div className="mt-8 pt-6 border-t border-black/10 flex items-center justify-between">
+                            <span className="font-mono text-sm text-black font-bold tracking-[0.15em]">
                                 {card.timeline}
                             </span>
 
-                            {/* Crayon → Clean line animation */}
-                            <div className="relative h-[2px] w-16 overflow-hidden">
-                                <motion.div
-                                    className="absolute inset-0 bg-white/20"
-                                    style={{ filter: 'url(#crayon-filter)' }}
-                                    animate={{ opacity: isHovered ? 0 : 1 }}
-                                    transition={{ duration: 0.4 }}
-                                />
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-primary to-primary/50"
-                                    animate={{
-                                        scaleX: isHovered ? 1 : 0,
-                                        opacity: isHovered ? 1 : 0,
-                                    }}
-                                    style={{ originX: 0 }}
-                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                />
-                            </div>
+                            <div className="w-8 h-[2px] bg-black group-hover:w-16 transition-all duration-700" />
                         </div>
                     </div>
                 </div>
@@ -208,31 +204,25 @@ const ServicesSection: React.FC = () => {
         offset: ['start end', 'end start'],
     });
 
-    const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+    const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
 
     return (
         <section
             ref={sectionRef}
             id="servicios"
-            className="relative py-32 md:py-44 px-6 md:px-12 bg-[#050505] overflow-hidden"
+            className="relative py-32 md:py-48 px-6 md:px-12 bg-paper overflow-hidden"
         >
-            {/* Background elements */}
+            {/* Background Texture Layers */}
             <motion.div
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 pointer-events-none opacity-40"
                 style={{ y: backgroundY }}
             >
-                {/* Subtle grid */}
-                <div
-                    className="absolute inset-0 opacity-[0.03]"
-                    style={{
-                        backgroundImage:
-                            'linear-gradient(to right, rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.5) 1px, transparent 1px)',
-                        backgroundSize: '80px 80px',
-                    }}
-                />
-                {/* Magenta bloom */}
-                <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/[0.03] blur-[150px] rounded-full" />
-                <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/[0.02] blur-[120px] rounded-full" />
+                {/* Large Decorative Ink Wash */}
+                <div className="absolute -left-20 top-20 w-[600px] h-[600px] ink-wash opacity-10" />
+
+                {/* Technical Blueprint Elements */}
+                <div className="absolute top-0 right-1/4 w-px h-full bg-black/5" />
+                <div className="absolute top-1/2 left-0 w-full h-px bg-black/5" />
             </motion.div>
 
             <div className="relative z-10 max-w-7xl mx-auto">
@@ -242,27 +232,26 @@ const ServicesSection: React.FC = () => {
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-12 h-px bg-primary/60" />
-                        <span className="font-mono text-[11px] text-primary/80 uppercase tracking-[0.4em]">
-                            El Taller
+                        <div className="w-12 h-[2px] bg-primary" />
+                        <span className="font-mono text-[12px] text-primary uppercase tracking-[0.4em] font-bold">
+                            Workshop / Atelier
                         </span>
                     </div>
 
-                    <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-medium text-white tracking-tighter leading-[0.9] mb-6">
+                    <h2 className="font-display text-6xl md:text-8xl lg:text-9xl font-medium text-black tracking-tighter leading-[0.85] mb-8">
                         Servicios
                     </h2>
 
-                    <p className="font-sans text-lg md:text-xl text-white/40 max-w-xl leading-relaxed font-light">
-                        Cada proyecto es una pieza artesanal — desde la estrategia
-                        hasta el último pixel.
+                    <p className="font-sans text-xl md:text-2xl text-black/60 max-w-2xl leading-relaxed font-normal">
+                        Cada proyecto es una pieza tallada a mano — una unión visceral entre <span className="text-primary italic">precisión técnica</span> y <span className="text-black italic">alma artesanal</span>.
                     </p>
                 </motion.div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                     {services.map((card, idx) => (
                         <ServiceCardComponent
                             key={card.title}
@@ -274,17 +263,21 @@ const ServicesSection: React.FC = () => {
 
                 {/* Bottom decorative element */}
                 <motion.div
-                    className="mt-24 flex items-center justify-center gap-6"
+                    className="mt-24 flex items-center justify-between"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.6, duration: 1 }}
                 >
-                    <div className="w-24 h-px bg-white/10" />
-                    <span className="font-mono text-[9px] text-white/20 uppercase tracking-[0.5em]">
-                        Artesanía / Precisión / Alma
+                    <span className="font-mono text-[10px] text-black/20 uppercase tracking-[0.5em]">
+                        Stamp & Ink System V1.0
                     </span>
-                    <div className="w-24 h-px bg-white/10" />
+                    <div className="flex items-center gap-6">
+                        <div className="w-12 h-px bg-black/10" />
+                        <span className="font-mono text-[9px] text-black/40 uppercase tracking-[0.5em]">
+                            Manta Creative Studio
+                        </span>
+                    </div>
                 </motion.div>
             </div>
         </section>

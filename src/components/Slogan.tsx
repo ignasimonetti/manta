@@ -199,8 +199,8 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
             y: 0,
             scale: 1,
             filter: [
-                "drop-shadow(0 0 0px rgba(255,255,255,0))",
-                "drop-shadow(0 0 15px rgba(255,0,255,0.8)) drop-shadow(0 0 30px rgba(255,0,255,0.4))"
+                "drop-shadow(0 0 0px rgba(0,0,0,0))",
+                "drop-shadow(0 0 15px rgba(217,2,109,0.5)) drop-shadow(0 0 30px rgba(217,2,109,0.3))"
             ],
             transition: {
                 y: { delay: 3.5, duration: 0.8, ease: [0.175, 0.885, 0.32, 1.275] as [number, number, number, number] },
@@ -248,10 +248,18 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
                 margin: "-35%"
             }}
         >
+            {/* Hidden SVG Filter for Crayon Effect */}
+            <svg width="0" height="0" className="absolute pointer-events-none">
+                <filter id="crayon-filter" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+            </svg>
+
             {/* Stagger wrapper — direct children must be motion elements */}
             <motion.div
                 variants={sloganWrapperVariants}
-                className="relative font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1] overflow-visible flex items-center"
+                className="relative font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-black leading-[1.1] overflow-visible flex items-center"
             >
                 {/* Regular chars — each is a direct motion child */}
                 {fullText.slice(0, -1).split("").map((char, index) => (
@@ -285,25 +293,43 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
                         <DissipatingElement
                             progress={progress}
                             variants={strikeVariants}
-                            className="absolute top-1/2 left-[-4px] right-[-4px] h-[4px] md:h-[8px] bg-primary z-10"
+                            className="absolute top-1/2 left-[0px] right-[-20px] z-10"
                             style={{
                                 transformOrigin: 'left center',
                                 filter: 'url(#crayon-filter)',
-                                boxShadow: '0 0 20px rgba(212,33,140,0.3)',
+                                transform: 'rotate(-12deg) translateY(6px)',
                                 display: 'block',
+                                height: '24px',
                             }}
                         >
-                            {/* Empty — the element itself is the strike line */}
+                            <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 100 24" className="overflow-visible">
+                                <path d="M-2,12 Q25,8 50,14 T102,10" stroke="var(--color-ink-magenta)" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.9" />
+                                <path d="M0,14 Q30,16 60,11 T100,14" stroke="var(--color-ink-magenta)" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.7" />
+                                <path d="M2,10 Q40,6 70,16 T98,12" stroke="var(--color-ink-magenta)" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5" />
+                            </svg>
                             <span className="sr-only">strike</span>
                         </DissipatingElement>
 
-                        {/* Point 1: 'o' has independent exit trajectory */}
+                        {/* Point 1: 'o' — large crayon circle wrapping "serie" */}
                         <DissipatingElement
                             progress={progress}
                             variants={oVariants}
-                            className="absolute -top-10 -right-4 md:-top-16 md:-right-8 text-white font-bold z-20 italic heading-glow"
+                            className="absolute z-20 pointer-events-none"
+                            style={{
+                                filter: 'url(#crayon-filter)',
+                                top: '-120%',
+                                right: '-280%',
+                                width: '340%',
+                                height: '340%',
+                            }}
                         >
-                            o
+                            <svg width="100%" height="100%" viewBox="0 0 120 130" className="overflow-visible" style={{ transform: 'rotate(12deg)' }}>
+                                <path d="M 60,8 C 22,5 5,35 8,70 C 11,105 40,125 72,118 C 104,111 118,80 112,48 C 106,16 78,5 55,12" stroke="var(--color-ink-magenta)" strokeWidth="7" strokeLinecap="round" fill="none" strokeLinejoin="round" opacity="0.85" />
+                                <path d="M 55,12 C 28,10 10,42 14,72 C 18,102 42,120 68,115 C 98,108 114,75 108,45 C 102,18 72,8 52,16" stroke="var(--color-ink-magenta)" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0.55" />
+                                <circle cx="10" cy="25" r="2.5" fill="var(--color-ink-magenta)" opacity="0.7" />
+                                <circle cx="108" cy="100" r="3" fill="var(--color-ink-magenta)" opacity="0.5" />
+                                <circle cx="112" cy="18" r="1.8" fill="var(--color-ink-magenta)" opacity="0.6" />
+                            </svg>
                         </DissipatingElement>
                     </span>
                 </DissipatingChar>
@@ -312,7 +338,7 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
 
             {/* Sub-slogan — Point 4: hooks called unconditionally above */}
             <motion.div
-                className="mt-12 relative font-sans text-lg md:text-xl tracking-[0.2em] uppercase font-light"
+                className="mt-16 md:mt-24 relative font-mono text-xs md:text-sm tracking-[0.4em] uppercase font-bold"
                 variants={subSloganVariants}
                 style={{
                     opacity: progress ? subExitOpacity : undefined,
@@ -320,15 +346,15 @@ const Slogan: React.FC<SloganProps> = ({ progress }) => {
                     filter: progress ? subExitFilter : undefined,
                 }}
             >
-                <span className="text-white/10 whitespace-nowrap block">
+                <span className="text-black/10 whitespace-nowrap block">
                     Agencia Digital y Consultoría
                 </span>
 
                 <motion.div
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-white border-r-2 border-primary z-10"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-black border-r-2 border-primary z-10"
                     variants={fillVariants}
                     style={{
-                        boxShadow: '4px 0 15px -2px rgba(212,33,140,0.5)'
+                        boxShadow: '4px 0 15px -2px rgba(217,2,109,0.3)'
                     }}
                 >
                     Agencia Digital y Consultoría

@@ -15,6 +15,9 @@ const MantaLogo: React.FC<MantaLogoProps> = ({ className, variant = 'dark' }) =>
                 src={src}
                 alt="Manta Logo"
                 className="w-full h-full object-contain"
+                onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                }}
             />
         </div>
     );

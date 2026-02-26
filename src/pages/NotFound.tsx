@@ -1,20 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, ArrowLeft } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 import { WavyBackground } from '../components/ui/WavyBackground';
 
 const NotFound: React.FC = () => {
     return (
-        <div className="min-h-screen bg-white relative flex flex-col items-center justify-center overflow-hidden px-6">
+        <div className="min-h-screen bg-[#f4f4f0] relative flex flex-col items-center justify-center overflow-hidden px-6 selection:bg-primary/20 selection:text-deep-charcoal">
 
             {/* The Wavy Background - Subdued and Editorial */}
             <WavyBackground
                 className="absolute inset-0 z-0 pointer-events-none"
                 blur={2}
                 speed="slow"
-                waveOpacity={0.8}
+                waveOpacity={0.4}
+                backgroundFill="#f4f4f0"
             />
 
             {/* Background Texture — Adds noise over the waves */}
@@ -90,32 +91,24 @@ const NotFound: React.FC = () => {
                     </p>
 
                     {/* Actions */}
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <div className="flex flex-col items-center justify-center">
                         <Link to="/" className="group relative">
                             <motion.div
-                                className="flex items-center gap-4 bg-deep-charcoal text-white px-10 py-5 rounded-full font-display font-medium text-sm tracking-widest hover:bg-primary transition-all duration-500 shadow-glass"
+                                className="flex items-center gap-4 bg-deep-charcoal text-white px-12 py-6 rounded-full font-display font-medium text-xs tracking-[0.3em] hover:bg-primary transition-all duration-500 shadow-2xl"
                                 whileHover={{ y: -4, scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <Home size={18} className="group-hover:rotate-12 transition-transform duration-500" />
                                 VOLVER AL INICIO
                             </motion.div>
-                            <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-full" />
+                            <div className="absolute inset-0 bg-primary/30 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-full" />
                         </Link>
-
-                        <button
-                            onClick={() => window.history.back()}
-                            className="font-display text-xs tracking-[0.2em] text-deep-charcoal/35 hover:text-primary transition-colors duration-300 flex items-center gap-2 uppercase py-4"
-                        >
-                            <ArrowLeft size={14} />
-                            Regresar
-                        </button>
                     </div>
                 </motion.div>
             </div>
 
             {/* Premium Detail Footer */}
-            <div className="absolute bottom-8 left-0 w-full flex flex-col md:flex-row justify-between px-8 md:px-16 items-center gap-4 pointer-events-none z-10">
+            <div className="absolute bottom-4 md:bottom-8 left-0 w-full flex flex-col md:flex-row justify-between px-6 md:px-16 items-center gap-4 pointer-events-none z-10">
                 <div className="flex items-center gap-6">
                     <div className="h-[1px] w-12 bg-deep-charcoal/10 hidden md:block" />
                     <span className="font-mono text-[10px] text-deep-charcoal/25 uppercase tracking-[0.4em]">
