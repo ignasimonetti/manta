@@ -142,7 +142,7 @@ const Home = () => {
                             </div>
 
                             <a href="#contacto" className="group cursor-pointer">
-                                <div className="btn-atelier bg-black text-white px-8 py-5 md:px-10 rounded-none font-mono font-bold text-[11px] tracking-[0.3em] md:tracking-[0.4em] transition-all hatch-shadow border-none hover:bg-neutral-900 border-none">
+                                <div className="btn-atelier bg-black text-white px-8 py-5 md:px-10 rounded-none font-mono font-bold text-[11px] tracking-[0.3em] md:tracking-[0.4em] transition-all hatch-shadow border border-black hover:bg-neutral-800 hover:text-white">
                                     INICIAR PROYECTO
                                 </div>
                             </a>
