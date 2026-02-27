@@ -44,10 +44,12 @@ const VideoShowcase: React.FC = () => {
             >
                 {/* The Video */}
                 <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                    autoPlay={true}
+                    loop={true}
+                    muted={true}
+                    playsInline={true}
+                    disablePictureInPicture={true}
+                    controlsList="nodownload nofullscreen noremoteplayback"
                     className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 contrast-125"
                 >
                     <source src="/videos/manta-showcase.mp4" type="video/mp4" />

@@ -22,10 +22,12 @@ const VideoLight: React.FC = () => {
             >
                 {/* Background Video */}
                 <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                    autoPlay={true}
+                    loop={true}
+                    muted={true}
+                    playsInline={true}
+                    disablePictureInPicture={true}
+                    controlsList="nodownload nofullscreen noremoteplayback"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
                     <source src="/videos/manta-showcase-light.mp4" type="video/mp4" />

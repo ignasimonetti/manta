@@ -17,12 +17,12 @@ const FooterReveal = () => {
         target: containerRef,
         offset: ["start end", "end end"]
     });
-    const yParallax = useTransform(scrollYProgress, [0, 1], ["-20%", "0%"]);
-    const footerOpacity = useTransform(scrollYProgress, [0, 0.6], [0.6, 1]);
-    const footerScale = useTransform(scrollYProgress, [0, 0.8], [0.92, 1]);
+    const yParallax = useTransform(scrollYProgress, [0, 1], ["-100px", "0px"]);
+    const footerOpacity = useTransform(scrollYProgress, [0, 0.8], [0.95, 1]);
+    const footerScale = useTransform(scrollYProgress, [0, 0.8], [0.95, 1]);
 
     return (
-        <div ref={containerRef} className="relative z-0 bg-[#0A0A0A] pt-[20%]">
+        <div ref={containerRef} className="relative z-0 bg-[#0A0A0A] pt-[100px]">
             <motion.div style={{ y: yParallax, opacity: footerOpacity, scale: footerScale }}>
                 <FooterSignature />
             </motion.div>
