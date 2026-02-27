@@ -50,6 +50,7 @@ const VideoShowcase: React.FC = () => {
                     playsInline={true}
                     disablePictureInPicture={true}
                     controlsList="nodownload nofullscreen noremoteplayback"
+                    poster="/videos/manta-showcase-poster.jpg"
                     className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 contrast-125"
                 >
                     <source src="/videos/manta-showcase.mp4" type="video/mp4" />

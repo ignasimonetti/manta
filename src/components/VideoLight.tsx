@@ -28,6 +28,7 @@ const VideoLight: React.FC = () => {
                     playsInline={true}
                     disablePictureInPicture={true}
                     controlsList="nodownload nofullscreen noremoteplayback"
+                    poster="/videos/manta-showcase-light-poster.jpg"
                     className="absolute inset-0 w-full h-full object-cover"
                 >
                     <source src="/videos/manta-showcase-light.mp4" type="video/mp4" />
