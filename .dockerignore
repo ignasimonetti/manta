@@ -5,7 +5,6 @@ dist
 .gitignore
 README.md
 Dockerfile
-nginx.conf
 wrangler.toml
 workers
 testsprite_tests
