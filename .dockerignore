@@ -12,4 +12,3 @@ testsprite_tests
 RECAP_SESSION*.md
 MANTA_PRD.md
 .eslint.config.js
-tsconfig*.json
