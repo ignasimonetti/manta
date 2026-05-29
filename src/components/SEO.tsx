@@ -11,7 +11,7 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({
   title = "Manta Studio | Atelier Digital & High-End Design",
   description = "Fusionando el gesto orgánico con la estructura digital precisa. Especialistas en Branding, Diseño Web y Experiencias Digitales Premium.",
-  image = "/logo-color-vector.svg",
+  image = "/og-image.png",
   url = "https://manta.com.ar/",
   type = "website"
 }) => {

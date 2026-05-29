@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, type SpringOptions } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useReducedMotion, type SpringOptions } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface TiltedCardProps {
@@ -83,6 +83,12 @@ export default function TiltedCard({
         rotateX.set(0);
         rotateY.set(0);
         rotateFigcaption.set(0);
+    }
+
+    const shouldReduceMotion = useReducedMotion();
+
+    if (shouldReduceMotion) {
+        return <figure className={cn("relative w-full h-full", containerClassName)}>{children}</figure>;
     }
 
     return (

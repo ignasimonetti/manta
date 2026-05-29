@@ -226,6 +226,7 @@ const ContactSection = () => {
                                                     required
                                                     disabled={formState === 'submitting'}
                                                     placeholder="Nombre"
+                                                    aria-label="Nombre"
                                                     className={inputClasses}
                                                 />
                                             </div>
@@ -233,9 +234,11 @@ const ContactSection = () => {
                                                 <label className="text-[10px] uppercase tracking-[0.2em] text-black/40 ml-1 font-mono group-focus-within:text-primary transition-colors duration-500">Vía de Contacto</label>
                                                 <input
                                                     name="email"
+                                                    type="email"
                                                     required
                                                     disabled={formState === 'submitting'}
                                                     placeholder="Correo electrónico"
+                                                    aria-label="Correo electrónico"
                                                     className={inputClasses}
                                                 />
                                             </div>
@@ -290,6 +293,7 @@ const ContactSection = () => {
                                                 required
                                                 disabled={formState === 'submitting'}
                                                 placeholder="Escribe aquí el núcleo de tu propuesta..."
+                                                aria-label="Mensaje"
                                                 className={cn(inputClasses, "resize-none")}
                                             />
                                         </div>
