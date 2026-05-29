@@ -39,7 +39,7 @@ const VideoLight: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/40" />
 
                 {/* Grain Texture (Subtle for light mode) */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply bg-[url('/noise.svg')]" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
