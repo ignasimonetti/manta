@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import Hero from '../components/Hero';
-import ParticlesSection from '../components/ParticlesSection';
-import ServicesSection from '../components/ServicesSection';
-import ManifestoSection from '../components/ManifestoSection';
-import PortfolioSection from '../components/PortfolioSection';
-import ContactSection from '../components/ContactSection';
-import FooterSignature from '../components/FooterSignature';
-import VideoShowcase from '../components/VideoShowcase';
-import VideoLight from '../components/VideoLight';
-import TextReveal from '../components/TextReveal';
 import SEO from '../components/SEO';
 import { useScroll, useTransform, motion } from 'framer-motion';
+
+const ParticlesSection = lazy(() => import('../components/ParticlesSection'));
+const ServicesSection = lazy(() => import('../components/ServicesSection'));
+const ManifestoSection = lazy(() => import('../components/ManifestoSection'));
+const PortfolioSection = lazy(() => import('../components/PortfolioSection'));
+const ContactSection = lazy(() => import('../components/ContactSection'));
+const VideoShowcase = lazy(() => import('../components/VideoShowcase'));
+const VideoLight = lazy(() => import('../components/VideoLight'));
+const TextReveal = lazy(() => import('../components/TextReveal'));
+const FooterSignature = lazy(() => import('../components/FooterSignature'));
+
+const sectionFallback = <div className="h-screen" />;
 
 const FooterReveal = () => {
     const containerRef = React.useRef<HTMLDivElement>(null);
@@ -41,7 +44,6 @@ const Home = () => {
         offset: ["start end", "end start"]
     });
 
-    // Parallax values for the intro section
     const titleY = useTransform(introScrollProgress, [0, 1], ["-15%", "15%"]);
     const textY = useTransform(introScrollProgress, [0, 1], ["10%", "-10%"]);
     const rightSideY = useTransform(introScrollProgress, [0, 1], ["15%", "-15%"]);
@@ -52,7 +54,6 @@ const Home = () => {
         return () => window.removeEventListener('resize', updateVh);
     }, []);
 
-    // Background Color Transition: Pure White (#FFFFFF) -> Paper Light (#F9F9F7)
     const bgColor = useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], ["#FFFFFF", "#F9F9F7"]);
     const sketchOpacity = useTransform(scrollY, [currentVh * 2.8, currentVh * 3.0], [0, 0.4]);
 
@@ -63,7 +64,6 @@ const Home = () => {
                 className="relative z-10 w-full shadow-[0_20px_60px_rgba(0,0,0,0.5)] origin-top border-b border-black/10"
                 style={{ backgroundColor: bgColor }}
             >
-                {/* Global Artistic Overlays */}
                 <motion.div
                     className="fixed inset-0 sketch-grid pointer-events-none -z-10"
                     style={{ opacity: sketchOpacity }}
@@ -72,9 +72,7 @@ const Home = () => {
                 <div className="noise-bg" />
                 <Hero />
 
-                {/* Brand Intro Section — Relocated from Hero */}
                 <section ref={introRef} className="relative bg-paper-light z-20 py-20 md:py-40 px-6 md:px-12 border-t border-black/5 overflow-hidden">
-                    {/* Technical Grid Accent */}
                     <motion.div className="absolute top-0 right-0 w-64 h-64 opacity-[0.03] pointer-events-none"
                         style={{
                             y: useTransform(introScrollProgress, [0, 1], ["-30%", "30%"]),
@@ -84,8 +82,6 @@ const Home = () => {
                     />
 
                     <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-end">
-
-                        {/* Left: Brand Name & Tagline */}
                         <motion.div
                             className="md:col-span-6"
                             style={{ y: titleY }}
@@ -125,7 +121,6 @@ const Home = () => {
                             </motion.div>
                         </motion.div>
 
-                        {/* Right: CTA + Manifesto Summary */}
                         <motion.div
                             className="md:col-span-6 flex flex-col justify-end items-start md:items-end gap-12"
                             style={{ y: rightSideY }}
@@ -135,12 +130,14 @@ const Home = () => {
                             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                         >
                             <div className="md:text-right">
-                                <TextReveal
-                                    text="Eliminamos lo innecesario, dejando marcas que se sienten humanas en un mundo digital."
-                                    className="font-sans text-2xl md:text-3xl text-black/50 leading-snug font-normal max-w-md italic"
-                                    delay={0.4}
-                                    accentLastWord={true}
-                                />
+                                <Suspense fallback={null}>
+                                    <TextReveal
+                                        text="Eliminamos lo innecesario, dejando marcas que se sienten humanas en un mundo digital."
+                                        className="font-sans text-2xl md:text-3xl text-black/50 leading-snug font-normal max-w-md italic"
+                                        delay={0.4}
+                                        accentLastWord={true}
+                                    />
+                                </Suspense>
                             </div>
 
                             <a href="#contacto" className="group cursor-pointer">
@@ -149,24 +146,19 @@ const Home = () => {
                                 </div>
                             </a>
                         </motion.div>
-
                     </div>
                 </section>
 
-                <VideoLight />
-
-                <ParticlesSection />
-                <VideoShowcase />
-                <ManifestoSection />
-                <ServicesSection />
-
-                <PortfolioSection />
-
-                <ContactSection />
-
+                <Suspense fallback={sectionFallback}><VideoLight /></Suspense>
+                <Suspense fallback={sectionFallback}><ParticlesSection /></Suspense>
+                <Suspense fallback={sectionFallback}><VideoShowcase /></Suspense>
+                <Suspense fallback={sectionFallback}><ManifestoSection /></Suspense>
+                <Suspense fallback={sectionFallback}><ServicesSection /></Suspense>
+                <Suspense fallback={sectionFallback}><PortfolioSection /></Suspense>
+                <Suspense fallback={sectionFallback}><ContactSection /></Suspense>
             </motion.main>
 
-            <FooterReveal />
+            <Suspense fallback={null}><FooterReveal /></Suspense>
         </div>
     );
 };
