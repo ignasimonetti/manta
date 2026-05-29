@@ -6,8 +6,11 @@ import SVGFilters from './components/SVGFilters';
 import { ProjectProvider } from './context/ProjectContext';
 import Home from './pages/Home';
 
-// Lazy load heavy pages
+// Lazy load pages
 const Lab = lazy(() => import('./pages/Lab'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Legal = lazy(() => import('./pages/Legal'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
             </>
           } />
           <Route path="/lab" element={<Lab />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/legal" element={<Legal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

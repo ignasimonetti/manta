@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import SocialIcons from './SocialIcons';
 import SignatureCanvas from './SignatureCanvas';
@@ -211,9 +212,9 @@ const FooterSignature: React.FC = () => {
                         </div>
 
                         <div className="flex gap-8">
-                            <a href="#" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Privacy</a>
-                            <a href="#" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Terms</a>
-                            <a href="#" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Legal</a>
+                            <Link to="/privacy" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Privacidad</Link>
+                            <Link to="/terms" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Términos</Link>
+                            <Link to="/legal" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Aviso Legal</Link>
                         </div>
                     </div>
                 </div>
