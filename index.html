@@ -1,10 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' umami.manta.com.ar;
+    style-src 'self' fonts.googleapis.com 'unsafe-inline';
+    font-src fonts.gstatic.com;
+    img-src 'self' data: blob:;
+    connect-src 'self' umami.manta.com.ar;
+    frame-ancestors 'none';
+    form-action 'self';
+  ">
+
+  <!-- Fonts: Inter (body) + Outfit (display) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+
   <title>Manta Studio</title>
   <!-- Umami Analytics -->
   <script defer src="https://umami.manta.com.ar/script.js" data-website-id="%VITE_UMAMI_WEBSITE_ID%"></script>

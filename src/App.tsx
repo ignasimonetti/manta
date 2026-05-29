@@ -1,27 +1,32 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CustomCursor from './components/CustomCursor';
 import SVGFilters from './components/SVGFilters';
 import { ProjectProvider } from './context/ProjectContext';
 import Home from './pages/Home';
-import Lab from './pages/Lab';
-import NotFound from './pages/NotFound';
+
+// Lazy load heavy pages
+const Lab = lazy(() => import('./pages/Lab'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   return (
     <ProjectProvider>
       <CustomCursor />
 
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Navbar />
-            <Home />
-          </>
-        } />
-        <Route path="/lab" element={<Lab />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          } />
+          <Route path="/lab" element={<Lab />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
 
       <SVGFilters />
     </ProjectProvider>

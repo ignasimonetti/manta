@@ -1,0 +1,11 @@
+name = "manta-contact-proxy"
+main = "workers/contact-proxy.js"
+compatibility_date = "2025-04-01"
+
+[[kv_namespaces]]
+binding = "KV"
+id = ""
+preview_id = ""
+
+[env.production]
+vars = { ENVIRONMENT = "production" }

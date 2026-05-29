@@ -9,6 +9,7 @@ import FooterSignature from '../components/FooterSignature';
 import VideoShowcase from '../components/VideoShowcase';
 import VideoLight from '../components/VideoLight';
 import TextReveal from '../components/TextReveal';
+import SEO from '../components/SEO';
 import { useScroll, useTransform, motion } from 'framer-motion';
 
 const FooterReveal = () => {
@@ -57,6 +58,7 @@ const Home = () => {
 
     return (
         <div className="selection:bg-primary selection:text-white bg-[#0A0A0A] font-sans">
+            <SEO />
             <motion.main
                 className="relative z-10 w-full shadow-[0_20px_60px_rgba(0,0,0,0.5)] origin-top border-b border-black/10"
                 style={{ backgroundColor: bgColor }}

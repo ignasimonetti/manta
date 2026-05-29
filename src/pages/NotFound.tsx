@@ -4,10 +4,15 @@ import { Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 import { WavyBackground } from '../components/ui/WavyBackground';
+import SEO from '../components/SEO';
 
 const NotFound: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#f4f4f0] relative flex flex-col items-center justify-center overflow-hidden px-6 selection:bg-primary/20 selection:text-deep-charcoal">
+            <SEO
+                title="404 | Página No Encontrada - Manta Studio"
+                description="Extraviado en el proceso. La página que buscas se ha disuelto en el vacío digital."
+            />
 
             {/* The Wavy Background - Subdued and Editorial */}
             <WavyBackground

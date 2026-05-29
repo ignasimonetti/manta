@@ -3,11 +3,16 @@ import { motion } from 'framer-motion';
 import { Beaker, Binary, Sparkles } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import FooterSignature from '../components/FooterSignature';
+import SEO from '../components/SEO';
 
 const Lab: React.FC = () => {
 
     return (
         <div className="relative min-h-screen bg-paper-light selection:bg-primary/20 overflow-x-hidden">
+            <SEO
+                title="Manta Lab | Experimental Creative Coding"
+                description="Nuestra área de investigación y desarrollo donde el código se convierte en gesto y los algoritmos en emoción visceral."
+            />
             <Navbar />
 
             {/* Main Content with padding for Navbar */}

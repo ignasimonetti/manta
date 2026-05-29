@@ -1,0 +1,78 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - React 19
+  - Vite
+  - Tailwind CSS 4.0
+  - Framer Motion
+  - GSAP
+  - Three.js
+  - Lucide React
+  - Phosphor Icons
+routes:
+  - path: /
+    file: src/pages/Home.tsx
+    auth_required: false
+    description: Landing page for Manta Studio
+  - path: /lab
+    file: src/pages/Lab.tsx
+    auth_required: false
+    description: Experimental creative coding laboratory
+  - path: /404
+    file: src/pages/NotFound.tsx
+    auth_required: false
+    description: Custom 404 error page experience
+features:
+  - name: Landing Page Navigation
+    description: High-end landing page with parallax and scroll animations
+    files:
+      - src/pages/Home.tsx
+      - src/components/Hero.tsx
+      - src/components/Navbar.tsx
+    entry_route: /
+    user_interactions:
+      - Scroll through sections
+      - View Hero animations
+      - Use custom cursor navigation
+    auth_required: false
+  - name: Portfolio Showcase
+    description: Bento Grid layout showing agency projects
+    files:
+      - src/components/PortfolioSection.tsx
+    entry_route: /
+    user_interactions:
+      - Hover over project cards to see previews
+      - Click project cards to view details
+    auth_required: false
+  - name: Laboratory Experiments
+    description: Space for creative coding and technical experiments
+    files:
+      - src/pages/Lab.tsx
+    entry_route: /lab
+    user_interactions:
+      - Interact with creative experiments
+    auth_required: false
+  - name: Contact Form
+    description: Premium dynamic contact form for project inquiries
+    files:
+      - src/components/ContactSection.tsx
+    entry_route: /
+    user_interactions:
+      - Fill in contact details
+      - Submit form for inquiries
+    auth_required: false
+  - name: Wavy 404 Experience
+    description: Engaging animated error page
+    files:
+      - src/pages/NotFound.tsx
+      - src/components/ui/WavyBackground.tsx
+    entry_route: /unknown-path
+    user_interactions:
+      - View wavy animations
+      - Click "Volver al Inicio" button
+    auth_required: false
+known_limitations:
+  - issue: "%VITE_UMAMI_WEBSITE_ID% is not defined in some environments"
+    location: index.html
+    impact: Analytics script may fail tracking without the environment variable.

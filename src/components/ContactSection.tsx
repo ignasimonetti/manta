@@ -27,13 +27,13 @@ const ContactSection = () => {
         };
 
         try {
-            const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL;
+            const apiUrl = import.meta.env.VITE_CONTACT_API_URL;
 
-            if (!webhookUrl) {
-                console.warn('VITE_N8N_WEBHOOK_URL is not defined. Falling back to simulation.');
+            if (!apiUrl) {
+                console.warn('VITE_CONTACT_API_URL is not defined. Falling back to simulation.');
                 await new Promise(resolve => setTimeout(resolve, 2000));
             } else {
-                const response = await fetch(webhookUrl, {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),

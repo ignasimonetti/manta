@@ -1,0 +1,993 @@
+[
+  {
+    "id": "TC001",
+    "title": "Landing page loads and hero content is visible",
+    "description": "Verifies the landing page renders successfully and displays the Hero section on initial load.",
+    "category": "Landing Page Navigation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Navbar\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Manta\""
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Scroll through landing sections and see content update",
+    "description": "Verifies scroll-driven navigation reveals multiple sections with smooth content progression.",
+    "category": "Landing Page Navigation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the next section below the Hero"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Brand Intro\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll further down the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Lab\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Parallax Brand Intro is visible and remains readable while scrolling",
+    "description": "Verifies the Brand Intro section appears and remains present/usable as the user scrolls through it (parallax effect without requiring animation verification).",
+    "category": "Landing Page Navigation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the section titled \"Brand Intro\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Brand Intro\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll slightly within the Brand Intro section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Brand Intro\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Brand\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Custom cursor navigation is present on the landing experience",
+    "description": "Verifies the landing page shows a custom cursor indicator/affordance when interacting with the page.",
+    "category": "Landing Page Navigation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll slightly down the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Custom cursor\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll back to the top of the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Custom cursor\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Navigate from landing page to Lab via in-page navigation",
+    "description": "Verifies a user can reach the Lab page from the landing experience using visible navigation (not direct URL navigation).",
+    "category": "Landing Page Navigation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Navbar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Lab\" in the navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/lab\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Lab\""
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Landing page transitions do not block navigation interactions",
+    "description": "Verifies smooth transitions do not prevent clicking primary navigation shortly after load.",
+    "category": "Landing Page Navigation",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Navbar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Wait for element \"Hero\" to be visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Lab\" in the navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/lab\""
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Graceful handling when page visuals appear broken (fallback still allows navigation)",
+    "description": "Verifies that if animations/assets appear broken or frozen, the page still shows fallback content or an error notice and remains operable.",
+    "category": "Landing Page Navigation",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Wait for element \"Hero\" to be visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Retry\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Retry\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Hero\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Project detail view contains visible identifying content",
+    "description": "Verifies the project detail view includes a visible title or identifying content for the selected project.",
+    "category": "Portfolio Showcase",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Portfolio section"
+      },
+      {
+        "type": "action",
+        "description": "Click a project card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Project detail\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Project title\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Project description\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Portfolio section is reachable by scrolling and the grid is visible",
+    "description": "Verifies the Portfolio section loads on the landing page and shows a visible set of project cards.",
+    "category": "Portfolio Showcase",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Portfolio section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Portfolio\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Portfolio grid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Project card\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Open Lab page and see the main header",
+    "description": "Verifies the Lab page loads and presents a visible Lab header for orientation.",
+    "category": "Laboratory Experiments",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Lab\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Lab\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiments\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Lab page shows an experiment list users can choose from",
+    "description": "Verifies the Lab page presents a visible list/grid of experiments to explore.",
+    "category": "Laboratory Experiments",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Experiments\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment list\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment card\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Open an experiment from the list and see an interactive canvas",
+    "description": "Verifies a user can enter an experiment and the live rendering surface is visible.",
+    "category": "Laboratory Experiments",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible experiment card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Canvas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment controls\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Interact with an experiment via its on-screen controls",
+    "description": "Verifies that interacting with experiment controls updates the on-screen state without errors.",
+    "category": "Laboratory Experiments",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible experiment card"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible control button in the experiment controls"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Canvas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment controls\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Interact with the canvas directly (pointer interaction)",
+    "description": "Verifies direct interaction with the canvas is possible and the rendering surface remains live.",
+    "category": "Laboratory Experiments",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible experiment card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Canvas\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the canvas area"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Canvas\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Verify fallback UI appears when an experiment cannot initialize",
+    "description": "Verifies the Lab experience shows a clear fallback message when WebGL/assets fail to initialize.",
+    "category": "Laboratory Experiments",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "action",
+        "description": "Click on an experiment card labeled with an error/unsupported indicator (if present)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Unable to initialize\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"supported\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Report issue\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Use the Report issue guidance from the fallback state",
+    "description": "Verifies the user can follow the on-page guidance to report an issue when initialization fails.",
+    "category": "Laboratory Experiments",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "action",
+        "description": "Click on an experiment card labeled with an error/unsupported indicator (if present)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Report issue\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Report issue\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Report\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Lab page remains usable after scrolling through experiments",
+    "description": "Verifies the experiment list remains visible and usable after scrolling (parallax/animations should not block interaction).",
+    "category": "Laboratory Experiments",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /lab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment list\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the bottom of the experiment list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Experiment card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the last visible experiment card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Canvas\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Submit contact form successfully with valid details",
+    "description": "Verifies a user can submit a project inquiry and sees a success confirmation with next steps.",
+    "category": "Contact Form",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Contact\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Ava Client\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ava.client@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Interested in a premium landing page + interactive lab section. Please share timeline and budget range.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Thank you\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Inline validation for missing required fields",
+    "description": "Verifies required-field validation appears when attempting to submit an incomplete contact form.",
+    "category": "Contact Form",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"name\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Inline validation for invalid email format",
+    "description": "Verifies invalid email entry shows an inline validation message and blocks submission.",
+    "category": "Contact Form",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Ava Client\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ava.client@\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Testing validation for email format.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Correct invalid inputs and resubmit successfully",
+    "description": "Verifies a user can fix inline validation errors and then submit successfully.",
+    "category": "Contact Form",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Ava Client\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"not-an-email\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ava.client@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Thank you\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Success confirmation includes next-steps messaging",
+    "description": "Verifies the post-submit success state shows clear next steps or follow-up guidance.",
+    "category": "Contact Form",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Jordan Prospect\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"jordan.prospect@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Looking for a Three.js-driven hero section and a portfolio refresh.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"next\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"steps\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Submission failure shows error notification",
+    "description": "Verifies a failed submission displays an error message to the user.",
+    "category": "Contact Form",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Casey Tester\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"casey.tester@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Please treat this as a failure-path test for the contact form.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"error\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Retry option is visible after submission error",
+    "description": "Verifies the UI presents an obvious retry action after a submission error.",
+    "category": "Contact Form",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Riley Retry\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"riley.retry@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Checking that the error UI provides a retry option.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Retry\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Form remains usable after an error (user can attempt again)",
+    "description": "Verifies after an error the user can interact with the form again and attempt resubmission.",
+    "category": "Contact Form",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the Contact section"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Taylor User\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"taylor.user@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Initial attempt may fail; verify form still accepts edits afterward.\" into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Click the form Submit button"
+      },
+      {
+        "type": "action",
+        "description": "Type \" Adding one more sentence before retrying.\" into the message field"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"message field\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Access the 404 page and confirm the wavy background experience renders",
+    "description": "Verifies the custom 404 page loads and presents the animated wavy background content and primary call-to-action.",
+    "category": "Wavy 404 Experience",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Blank Canvas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"wavy background\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Volver al Inicio\" button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Return to homepage using the \"Volver al Inicio\" button",
+    "description": "Verifies the primary recovery action on the 404 page returns the user to the homepage.",
+    "category": "Wavy 404 Experience",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Volver al Inicio\" button is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Volver al Inicio\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Manta\""
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "404 page remains usable even if animations are not apparent",
+    "description": "Verifies that if the animation is not visually apparent, the page still presents the recovery CTA to go back home.",
+    "category": "Wavy 404 Experience",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Blank Canvas\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Volver al Inicio\" button is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Volver al Inicio\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "Fallback to Homepage via Navbar Home link from the 404 page",
+    "description": "Verifies the user can recover from the 404 page via a Home link in the site navigation as a fallback path.",
+    "category": "Wavy 404 Experience",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Navbar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Home\" link in the Navbar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Manta\""
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Navigate to the Lab page from the 404 page using the global navigation",
+    "description": "Verifies navigation remains functional from the 404 page to a top-level route using the Navbar.",
+    "category": "Wavy 404 Experience",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Navbar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Lab\" link in the Navbar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/lab\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Lab\""
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "404 page content is stable and does not block interactions while background is visible",
+    "description": "Verifies the animated/visual background does not prevent clicking the primary action on the 404 page.",
+    "category": "Wavy 404 Experience",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /404"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"wavy background\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to \"Volver al Inicio\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Volver al Inicio\" button is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click \"Volver al Inicio\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      }
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:4173",
+  "loginUser": "ignaciosimonetti1984@gmail.com",
+  "loginPassword": "millonarios10",
+  "executionArgs": {
+    "projectName": "manta-app",
+    "projectPath": "/Users/ignaciosimonetti/Desktop/Proyectos Digitales/Clientes/Manta/manta-app",
+    "testIds": [],
+    "additionalInstruction": "Focus on UX critical points: Hero animations, Portfolio Bento grid responsiveness, and the interactive Contact form. Verify navigation to /lab and /404. retry after interruption.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-guhnuiTGOJP_z2_2XK1fVcKxyCXLZN7shKFzA3sPOjw596lFBoFzHuvkwSG-7z6xXs0R_tCj8xfVAoK2jejdLpEZyo9LUlV2osxYtWWwV5YuyVv6x1QxJTjU1tcRzH2kvYs"
+    }
+  },
+  "serverPort": 63400,
+  "proxy": "http://674acf55-0297-4e04-8821-ad08f91fb88d:B93JiijOmSmgKEYYu2lapbcPQ7VcU0kq@tun.testsprite.com:8080"
+}
