@@ -44,7 +44,7 @@ const ScrollDrawing: React.FC = () => {
             for (let i = start; i < end; i++) {
                 const img = new Image();
                 const frameNum = (i + 1).toString().padStart(3, '0');
-                img.src = `/frames/ezgif-frame-${frameNum}.jpg`;
+                img.src = `/frames/ezgif-frame-${frameNum}.webp`;
 
                 img.onload = () => {
                     if (cancelled) return;
