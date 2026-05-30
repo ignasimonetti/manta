@@ -116,6 +116,13 @@ const ScrollDrawing: React.FC = () => {
     }, [frameIndex, drawFrame]);
 
     useEffect(() => {
+        if (ready) {
+            const currentIdx = clamp(Math.floor(frameIndex.get()), 0, FRAME_COUNT - 1);
+            drawFrame(currentIdx);
+        }
+    }, [ready, frameIndex, drawFrame]);
+
+    useEffect(() => {
         const handleResize = () => {
             const canvas = canvasRef.current;
             if (!canvas) return;
