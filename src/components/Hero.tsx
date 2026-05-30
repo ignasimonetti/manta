@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
                             opacity: logoOpacity
                         }}
                     >
-                        <ScrollDrawing />
+                        <ScrollDrawing scrollY={scrollY} />
                     </motion.div>
                 </div>
             </div>

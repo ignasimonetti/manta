@@ -1,20 +1,21 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useScroll, useTransform, motion, AnimatePresence, useSpring } from 'framer-motion';
+import { useTransform, motion, AnimatePresence, useSpring, MotionValue } from 'framer-motion';
 
 
 const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, min), max);
 
 const FRAME_COUNT = 240;
-const BATCH_SIZE = 30;
+const BATCH_SIZE = 60;
 
-const ScrollDrawing: React.FC = () => {
+interface ScrollDrawingProps {
+    scrollY: MotionValue<number>;
+}
+
+const ScrollDrawing: React.FC<ScrollDrawingProps> = ({ scrollY }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const imagesRef = useRef<HTMLImageElement[]>([]);
     const [ready, setReady] = useState(false);
     const [loadProgress, setLoadProgress] = useState(0);
-
-    // Scroll tracking
-    const { scrollY } = useScroll();
     const [vh, setVh] = useState(typeof window !== 'undefined' ? window.innerHeight : 800);
 
     useEffect(() => {
@@ -26,8 +27,8 @@ const ScrollDrawing: React.FC = () => {
     // Map scroll pixels to frame index with spring smoothing (Act I: 0 -> 1.5vh)
     const rawFrameIndex = useTransform(scrollY, [0, vh * 1.5], [0, FRAME_COUNT - 1]);
     const frameIndex = useSpring(rawFrameIndex, {
-        stiffness: 20,
-        damping: 40,
+        stiffness: 80,
+        damping: 20,
         restDelta: 0.001
     });
 
@@ -50,11 +51,19 @@ const ScrollDrawing: React.FC = () => {
                     if (cancelled) return;
                     loadedCount++;
                     batchLoaded++;
+                    imagesRef.current[i] = img;
                     setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
 
                     if (i === 0) {
-                        imagesRef.current[0] = img;
                         setReady(true);
+                    }
+
+                    if (i === Math.floor(frameIndex.get())) {
+                        drawFrame(i);
+                    }
+
+                    if (loadedCount === FRAME_COUNT) {
+                        drawFrame(Math.floor(frameIndex.get()));
                     }
 
                     if (batchLoaded === end - start && end < FRAME_COUNT) {
