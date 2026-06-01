@@ -36,7 +36,7 @@ export default function ScrollDrawing({ scrollY }: ScrollDrawingProps) {
       if (cancelled || i >= FRAME_COUNT) return
 
       const img = new Image()
-      img.src = `/frames/frame_${pad(i + 1)}.webp`
+      img.src = `/frames/frame_${pad(i + 1)}.png`
 
       img.onload = () => {
         if (cancelled) return
@@ -65,11 +65,9 @@ export default function ScrollDrawing({ scrollY }: ScrollDrawingProps) {
     const img = imagesRef.current[index]
     if (!canvas || !ctx || !img) return
 
-    ctx.fillStyle = '#000'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    const cropH = img.height * 0.92
-    const imgAspect = img.width / cropH
+    const imgAspect = img.width / img.height
     const canvasAspect = canvas.width / canvas.height
     let dw: number, dh: number
 
@@ -85,7 +83,7 @@ export default function ScrollDrawing({ scrollY }: ScrollDrawingProps) {
     const sw = dw * scale
     const sh = dh * scale
 
-    ctx.drawImage(img, 0, 0, img.width, cropH, (canvas.width - sw) / 2, (canvas.height - sh) / 2, sw, sh)
+    ctx.drawImage(img, 0, 0, img.width, img.height, (canvas.width - sw) / 2, (canvas.height - sh) / 2, sw, sh)
   }, [])
 
   useEffect(() => {
@@ -123,12 +121,12 @@ export default function ScrollDrawing({ scrollY }: ScrollDrawingProps) {
             key="loader"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 flex flex-col items-center justify-center bg-[#0A0A0A] z-50"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-[#F9F9F7] z-50"
           >
-            <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden">
-              <motion.div className="absolute inset-y-0 left-0 bg-white" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
+            <div className="w-48 h-[1px] bg-black/10 relative overflow-hidden">
+              <motion.div className="absolute inset-y-0 left-0 bg-black/60" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
             </div>
-            <span className="mt-4 font-mono text-[10px] tracking-widest text-white/30 uppercase">
+            <span className="mt-4 font-mono text-[10px] tracking-widest text-black/30 uppercase">
               Cargando identidad / {progress}%
             </span>
           </motion.div>

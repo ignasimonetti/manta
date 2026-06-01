@@ -19,7 +19,7 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-[300vh]">
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center z-10 overflow-hidden bg-black">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center z-10 overflow-hidden bg-[#F9F9F7]">
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
           style={{ opacity: smoothOpacity }}
