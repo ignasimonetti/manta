@@ -50,7 +50,6 @@ export default function Hero() {
         >
           <video
             autoPlay
-            loop
             muted
             playsInline
             preload="auto"
