@@ -53,6 +53,8 @@ export default function Hero() {
             loop
             muted
             playsInline
+            preload="auto"
+            poster="/videos/manta-hero-poster.jpg"
             className="w-full h-full object-cover"
           >
             <source src="/videos/manta-hero.mp4" type="video/mp4" />
