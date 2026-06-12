@@ -48,6 +48,8 @@ const VideoShowcase: React.FC = () => {
                     loop={true}
                     muted={true}
                     playsInline={true}
+                    webkit-playsinline="true"
+                    preload="auto"
                     disablePictureInPicture={true}
                     controlsList="nodownload nofullscreen noremoteplayback"
                     poster="/videos/manta-showcase-poster.jpg"

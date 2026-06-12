@@ -371,9 +371,9 @@ const ContactSection = () => {
                     Manta Studio © {new Date().getFullYear()} · Digital Atelier
                 </div>
                 <div className="order-1 md:order-2 flex gap-10">
-                    <a href="#" className="hover:text-black transition-colors duration-500">Privacy</a>
-                    <a href="#" className="hover:text-black transition-colors duration-500">Terms</a>
-                    <a href="#" className="hover:text-black transition-colors duration-500">Legal</a>
+                    <a href="#" className="inline-block py-3 hover:text-black transition-colors duration-500">Privacy</a>
+                    <a href="#" className="inline-block py-3 hover:text-black transition-colors duration-500">Terms</a>
+                    <a href="#" className="inline-block py-3 hover:text-black transition-colors duration-500">Legal</a>
                 </div>
             </div>
         </section>

@@ -52,6 +52,7 @@ export default function Hero() {
             autoPlay
             muted
             playsInline
+            webkit-playsinline="true"
             preload="auto"
             poster="/videos/manta-hero-poster.jpg"
             className="w-full h-full object-cover"

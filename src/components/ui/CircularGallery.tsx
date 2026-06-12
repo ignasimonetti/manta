@@ -191,6 +191,8 @@ export const CircularGallery = ({
                                     loop
                                     muted
                                     playsInline
+                                    webkit-playsinline="true"
+                                    preload="auto"
                                     className="w-full h-full object-cover grayscale-[0.5] contrast-[1.1]"
                                 />
                             ) : (
@@ -286,7 +288,7 @@ export const CircularGallery = ({
                             <div className="pt-8 flex flex-wrap gap-4 items-center">
                                 {activeItem.url && activeItem.url !== '#' && (
                                     <motion.button
-                                        className="group flex items-center gap-2 px-8 py-3 bg-black text-white font-display text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-primary hover:text-white transition-all duration-300 hatch-shadow"
+                                        className="group flex items-center gap-2 px-8 py-3 min-h-[44px] bg-black text-white font-display text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-primary hover:text-white transition-all duration-300 hatch-shadow"
                                         whileHover={{ y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => window.open(activeItem.url, '_blank', 'noopener,noreferrer')}

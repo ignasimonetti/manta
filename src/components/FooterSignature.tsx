@@ -211,10 +211,10 @@ const FooterSignature: React.FC = () => {
                             <div className="px-3 py-1 border border-white/10 font-mono text-[8px] text-white/40 uppercase">V_1.0.4</div>
                         </div>
 
-                        <div className="flex gap-8">
-                            <Link to="/privacy" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Privacidad</Link>
-                            <Link to="/terms" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Términos</Link>
-                            <Link to="/legal" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors">Aviso Legal</Link>
+                        <div className="flex gap-8 items-center">
+                            <Link to="/privacy" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Privacidad</Link>
+                            <Link to="/terms" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Términos</Link>
+                            <Link to="/legal" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Aviso Legal</Link>
                         </div>
                     </div>
                 </div>
