@@ -365,7 +365,7 @@ const ContactSection = () => {
             </div>
 
             {/* Aesthetic Footer Detail */}
-            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[8px] font-mono text-black/40 uppercase tracking-[0.5em]">
+            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] sm:text-[8px] font-mono text-black/60 uppercase tracking-[0.5em]">
                 <div className="order-2 md:order-1 flex items-center gap-4">
                     <span className="w-1.5 h-1.5 bg-black/10" />
                     Manta Studio © {new Date().getFullYear()} · Digital Atelier

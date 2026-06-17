@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring, type Variants } from 'framer-motion'
 import { CrayonFilter } from './CrayonFilter'
 
@@ -30,6 +30,7 @@ const letterVariants: Variants = {
 export default function Hero() {
   const { scrollY } = useScroll()
   const [vh, setVh] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const update = () => setVh(window.innerHeight)
@@ -37,19 +38,46 @@ export default function Hero() {
     return () => window.removeEventListener('resize', update)
   }, [])
 
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const attemptPlay = () => {
+      video.play().catch(() => {
+        const onInteraction = () => {
+          video.play()
+          document.removeEventListener('touchstart', onInteraction)
+          document.removeEventListener('click', onInteraction)
+        }
+        document.addEventListener('touchstart', onInteraction)
+        document.addEventListener('click', onInteraction)
+      })
+    }
+
+    if (video.readyState >= 2) {
+      attemptPlay()
+    } else {
+      video.addEventListener('loadedmetadata', attemptPlay)
+      return () => video.removeEventListener('loadedmetadata', attemptPlay)
+    }
+  }, [])
+
   const imageOpacity = useTransform(scrollY, [vh * 1.5, vh * 2.5], [1, 0])
   const smoothOpacity = useSpring(imageOpacity, { stiffness: 80, damping: 20, restDelta: 0.001 })
 
   return (
-    <section className="relative w-full h-[300vh]">
+    <section className="relative w-full h-[200vh] lg:h-[300vh]">
       <CrayonFilter id="hero-crayon" />
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center z-10 overflow-hidden bg-[#F9F9F7]">
+      <div className="sticky top-0 h-dvh w-full flex flex-col justify-center items-center z-10 overflow-hidden bg-[#F9F9F7]">
         <motion.div
           className="absolute inset-0 flex items-center justify-center"
+          initial={{ opacity: 1 }}
           style={{ opacity: smoothOpacity }}
         >
           <video
+            ref={videoRef}
             autoPlay
+            loop
             muted
             playsInline
             webkit-playsinline="true"

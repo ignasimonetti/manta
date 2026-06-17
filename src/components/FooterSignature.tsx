@@ -43,7 +43,7 @@ const FooterSignature: React.FC = () => {
         <footer
             ref={footerRef}
             id="footer"
-            className="relative bg-paper-dark py-32 md:py-48 px-6 md:px-12 xl:px-24 overflow-hidden border-t border-white/[0.05]"
+            className="relative bg-paper-dark py-16 md:py-48 px-6 md:px-12 xl:px-24 overflow-hidden border-t border-white/[0.05]"
         >
             {/* Technical Header Reveal */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -115,7 +115,7 @@ const FooterSignature: React.FC = () => {
                             <div className="space-y-6">
                                 <div className="flex items-center gap-4">
                                     <span className="w-8 h-px bg-primary/30" />
-                                    <span className="font-mono text-[9px] text-white/40 uppercase tracking-[0.4em]">Digital Craftsmen</span>
+                                    <span className="font-mono text-[11px] sm:text-[9px] text-white/60 uppercase tracking-[0.4em]">Digital Craftsmen</span>
                                 </div>
                                 <p className="font-sans text-sm text-white/30 italic max-w-xs">
                                     "La belleza es el esplendor de la verdad."
@@ -165,7 +165,7 @@ const FooterSignature: React.FC = () => {
 
                                 <div className="mt-8 flex items-center justify-center gap-3">
                                     <div className="w-1.5 h-1.5 bg-primary/40" />
-                                    <p className="font-mono text-[8px] text-white/40 uppercase tracking-[0.3em]">
+                                    <p className="font-mono text-[10px] sm:text-[8px] text-white/60 uppercase tracking-[0.3em]">
                                         Trazado de Autor
                                     </p>
                                 </div>
@@ -185,17 +185,17 @@ const FooterSignature: React.FC = () => {
                 <div className="flex flex-col md:flex-row items-stretch border-t border-white/10">
                     <div className="flex-1 p-8 border-b md:border-b-0 md:border-r border-white/10">
                         <div className="flex items-center justify-between mb-4">
-                            <span className="font-mono text-[8px] text-white/20 uppercase tracking-[0.5em]">Estado del Sistema</span>
+                            <span className="font-mono text-[10px] sm:text-[8px] text-white/50 uppercase tracking-[0.5em]">Estado del Sistema</span>
                             <div className="flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-                                <span className="font-mono text-[9px] text-green-500/80 uppercase tracking-widest">Commission: Open</span>
+                                <span className="font-mono text-[11px] sm:text-[9px] text-green-500/80 uppercase tracking-widest">Commission: Open</span>
                             </div>
                         </div>
                         <div className="flex items-end justify-between">
                             <div className="font-mono text-2xl font-bold text-white tracking-tighter">
                                 {timeString}
                             </div>
-                            <div className="font-mono text-[8px] text-white/30 uppercase text-right">
+                            <div className="font-mono text-[10px] sm:text-[8px] text-white/60 uppercase text-right">
                                 SGO_DEL_ESTERO <br />
                                 ARGENTINA / GMT-3
                             </div>
@@ -206,15 +206,15 @@ const FooterSignature: React.FC = () => {
                         <div className="flex justify-between items-start mb-6">
                             <div className="space-y-1">
                                 <div className="font-mono text-[9px] text-white font-bold tracking-[0.3em] uppercase">MANTA STUDIO © {new Date().getFullYear()}</div>
-                                <div className="font-mono text-[8px] text-white/20 uppercase tracking-[0.4em]">Digital Atelier — Precision & Soul</div>
+                                <div className="font-mono text-[10px] sm:text-[8px] text-white/50 uppercase tracking-[0.4em]">Digital Atelier — Precision & Soul</div>
                             </div>
-                            <div className="px-3 py-1 border border-white/10 font-mono text-[8px] text-white/40 uppercase">V_1.0.4</div>
+                            <div className="px-3 py-1 border border-white/10 font-mono text-[10px] sm:text-[8px] text-white/60 uppercase">V_1.0.4</div>
                         </div>
 
                         <div className="flex gap-8 items-center">
-                            <Link to="/privacy" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Privacidad</Link>
-                            <Link to="/terms" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Términos</Link>
-                            <Link to="/legal" className="font-mono text-[8px] text-white/40 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Aviso Legal</Link>
+                            <Link to="/privacy" className="font-mono text-[11px] sm:text-[8px] text-white/60 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Privacidad</Link>
+                            <Link to="/terms" className="font-mono text-[11px] sm:text-[8px] text-white/60 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Términos</Link>
+                            <Link to="/legal" className="font-mono text-[11px] sm:text-[8px] text-white/60 hover:text-primary uppercase tracking-[0.3em] transition-colors py-3 inline-block">Aviso Legal</Link>
                         </div>
                     </div>
                 </div>

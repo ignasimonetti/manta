@@ -13,9 +13,9 @@ interface DissipatingCharProps {
 
 const DissipatingChar: React.FC<DissipatingCharProps> = ({ char, progress, variants, custom, className, style, children }) => {
     const randoms = useMemo(() => {
-        const exitStart = 0.91 + Math.random() * 0.05;
-        const exitEnd = Math.min(exitStart + 0.06, 1.0);
-        const fadeEnd = Math.min(exitStart + 0.05, 0.99);
+        const exitStart = 0.85 + Math.random() * 0.08;
+        const exitEnd = Math.min(exitStart + 0.08, 1.0);
+        const fadeEnd = Math.min(exitStart + 0.06, 0.99);
 
         return {
             x: (Math.random() - 0.5) * 300,

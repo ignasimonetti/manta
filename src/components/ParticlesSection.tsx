@@ -14,9 +14,9 @@ const ParticlesSection: React.FC = () => {
     return (
         <section
             ref={containerRef}
-            className="relative h-[500vh] w-full bg-paper-light"
+            className="relative h-[200vh] lg:h-[300vh] w-full bg-paper-light"
         >
-            {/* Sticky Container - Holds everything fixed while user scrolls through 500vh */}
+            {/* Sticky Container - Holds everything fixed while user scrolls through */}
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-paper-light">
                 {/* ═══════════ Slogan Content ═══════════ */}
                 <div className="relative z-10 flex h-full items-center justify-center px-8 md:px-24">
