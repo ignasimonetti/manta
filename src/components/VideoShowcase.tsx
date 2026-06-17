@@ -1,10 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 import { TextShimmerWave } from './TextShimmerWave';
 
+const SHOWCASE_VIDEO = '/videos/manta-showcase.mp4'
+
 const VideoShowcase: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const blobUrlRef = useRef<string | null>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
@@ -12,6 +16,32 @@ const VideoShowcase: React.FC = () => {
 
     const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
     const rotate = useTransform(scrollYProgress, [0, 1], [-2, 2]);
+
+    useEffect(() => {
+        const video = videoRef.current
+        if (!video) return
+
+        let cancelled = false
+
+        const load = async () => {
+            try {
+                const resp = await fetch(SHOWCASE_VIDEO)
+                const blob = await resp.blob()
+                if (cancelled) return
+                const url = URL.createObjectURL(blob)
+                blobUrlRef.current = url
+                video.src = url
+            } catch {
+            }
+        }
+
+        load()
+
+        return () => {
+            cancelled = true
+            if (blobUrlRef.current) URL.revokeObjectURL(blobUrlRef.current)
+        }
+    }, [])
 
     return (
         <section
@@ -44,6 +74,7 @@ const VideoShowcase: React.FC = () => {
             >
                 {/* The Video */}
                 <video
+                    ref={videoRef}
                     autoPlay={true}
                     loop={true}
                     muted={true}
@@ -54,9 +85,7 @@ const VideoShowcase: React.FC = () => {
                     controlsList="nodownload nofullscreen noremoteplayback"
                     poster="/videos/manta-showcase-poster.jpg"
                     className="absolute inset-0 w-full h-full object-cover grayscale opacity-90 contrast-125"
-                >
-                    <source src="/videos/manta-showcase.mp4" type="video/mp4" />
-                </video>
+                />
 
                 {/* Optional: Static Noise Overlay to make it feel printed */}
                 <div className="absolute inset-0 noise-bg opacity-40 mix-blend-overlay pointer-events-none" />

@@ -1,10 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TextGenerateEffect } from './TextGenerateEffect';
 import { MouseTilt } from './MouseTilt';
 
+const LIGHT_VIDEO = '/videos/manta-showcase-light.mp4'
+
 const VideoLight: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const blobUrlRef = useRef<string | null>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
@@ -14,6 +18,32 @@ const VideoLight: React.FC = () => {
     const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
     const y = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
 
+    useEffect(() => {
+        const video = videoRef.current
+        if (!video) return
+
+        let cancelled = false
+
+        const load = async () => {
+            try {
+                const resp = await fetch(LIGHT_VIDEO)
+                const blob = await resp.blob()
+                if (cancelled) return
+                const url = URL.createObjectURL(blob)
+                blobUrlRef.current = url
+                video.src = url
+            } catch {
+            }
+        }
+
+        load()
+
+        return () => {
+            cancelled = true
+            if (blobUrlRef.current) URL.revokeObjectURL(blobUrlRef.current)
+        }
+    }, [])
+
     return (
         <section ref={containerRef} className="relative w-full min-h-[70vh] py-20 px-4 md:px-8 overflow-hidden bg-white">
             <motion.div
@@ -22,6 +52,7 @@ const VideoLight: React.FC = () => {
             >
                 {/* Background Video */}
                 <video
+                    ref={videoRef}
                     autoPlay={true}
                     loop={true}
                     muted={true}
@@ -32,9 +63,7 @@ const VideoLight: React.FC = () => {
                     controlsList="nodownload nofullscreen noremoteplayback"
                     poster="/videos/manta-showcase-light-poster.jpg"
                     className="absolute inset-0 w-full h-full object-cover"
-                >
-                    <source src="/videos/manta-showcase-light.mp4" type="video/mp4" />
-                </video>
+                />
 
                 {/* Light Overlay - Glassmorphism Effect */}
                 <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px] mix-blend-soft-light" />

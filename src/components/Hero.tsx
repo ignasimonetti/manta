@@ -27,10 +27,13 @@ const letterVariants: Variants = {
   },
 }
 
+const HERO_VIDEO_URL = '/videos/manta-hero.mp4'
+
 export default function Hero() {
   const { scrollY } = useScroll()
   const [vh, setVh] = useState(typeof window !== 'undefined' ? window.innerHeight : 800)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const blobUrlRef = useRef<string | null>(null)
 
   useEffect(() => {
     const update = () => setVh(window.innerHeight)
@@ -42,23 +45,39 @@ export default function Hero() {
     const video = videoRef.current
     if (!video) return
 
-    const attemptPlay = () => {
-      video.play().catch(() => {
-        const onInteraction = () => {
-          video.play()
-          document.removeEventListener('touchstart', onInteraction)
-          document.removeEventListener('click', onInteraction)
-        }
-        document.addEventListener('touchstart', onInteraction)
-        document.addEventListener('click', onInteraction)
-      })
+    let cancelled = false
+
+    const loadVideo = async () => {
+      try {
+        const resp = await fetch(HERO_VIDEO_URL)
+        const blob = await resp.blob()
+        if (cancelled) return
+        const url = URL.createObjectURL(blob)
+        blobUrlRef.current = url
+
+        video.src = url
+        video.load()
+
+        video.play().catch(() => {
+          const onInteraction = () => {
+            video.play()
+            document.removeEventListener('touchstart', onInteraction)
+            document.removeEventListener('click', onInteraction)
+          }
+          document.addEventListener('touchstart', onInteraction)
+          document.addEventListener('click', onInteraction)
+        })
+      } catch {
+      }
     }
 
-    if (video.readyState >= 2) {
-      attemptPlay()
-    } else {
-      video.addEventListener('loadedmetadata', attemptPlay)
-      return () => video.removeEventListener('loadedmetadata', attemptPlay)
+    loadVideo()
+
+    return () => {
+      cancelled = true
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current)
+      }
     }
   }, [])
 
@@ -84,9 +103,7 @@ export default function Hero() {
             preload="auto"
             poster="/videos/manta-hero-poster.jpg"
             className="w-full h-full object-cover"
-          >
-            <source src="/videos/manta-hero.mp4" type="video/mp4" />
-          </video>
+          />
 
           <div className="absolute inset-0 flex flex-col justify-end items-center pb-[12vh] md:pb-[10vh] pointer-events-none">
             <motion.h1
