@@ -13,15 +13,14 @@ Manta Studio is a premium digital atelier specializing in branding, design, and 
 - **NotFound (404)**: A "Blank Canvas" wavy experience designed to keep users engaged even when they get lost.
 
 ## 3. Visual Identity & UX
-- **Design System**: "Manta Ink" (#D9026D), "Paper Light" (#F4F1EA), and "Deep Charcoal" (#1A1A1A).
+- **Design System**: see `STYLE_GUIDE.md` (single source of truth, derived from `src/index.css`). Manta Ink `#D9026D`, paper tones `#F9F9F7` / `#F4F1EA` / `#F1F1EF`, Deep Charcoal `#1A1A1A`, night `#0A0A0A`; Outfit (display) + Inter (text) + system mono (labels).
 - **Textures**: Noise overlays and sketch-grid backgrounds for a tactile, physical feel.
-- **Interactions**: Custom cursor, GSAP animations, Framer Motion transitions, and Three.js (3D) components.
+- **Interactions**: Custom cursor, Framer Motion transitions, SVG crayon filters and canvas particles.
 
 ## 4. Technical Stack
 - **Frontend**: React 19, TypeScript, Vite.
 - **Styling**: Tailwind CSS 4.0.
-- **Animation**: Framer Motion, GSAP.
-- **3D**: React Three Fiber (R3F), Three.js.
+- **Animation**: Framer Motion.
 - **Analytics**: Umami Analytics.
 
 ## 5. Objectives
