@@ -65,7 +65,7 @@ Geist Sans y Geist Mono **no** se cargan; los nombraba la guía histórica.
 | Rótulo mono | 10px (8 a 12px), mayúsculas, `tracking-[0.2em]`–`[0.4em]` | — | — |
 
 ## Formas, sombras y texturas
-- **Radios:** `--radius-sharp` 2px y `--radius-technical` 8px como base técnica; `rounded-full` en chips y rótulos; `rounded-xl` (12px) en campos; `rounded-none` en el botón principal.
+- **Radios:** en la práctica el sitio es de esquinas rectas: tarjetas, botones y campos van sin radio o con `rounded-sm` (2px). `rounded-full` en chips y rótulos; `rounded-xl` (12px) en los íconos sociales; `rounded-[40px]` en el video destacado. `--radius-sharp` (2px) y `--radius-technical` (8px) están definidos en `@theme` pero no se usan.
 - **Sombra de trama (`--shadow-hatch`):** `4px 4px 0 rgba(0,0,0,0.8)`, sombra dura de imprenta para hover de botones y velos.
 - **Sombra de tinta (`--shadow-ink`):** `0 4px 20px rgba(217,2,109,0.15)`.
 - **Grano de papel:** ruido fractal SVG al 5–8% de opacidad en `.bg-paper`, `.bg-paper-light` y `.bg-paper-dark`.
@@ -73,10 +73,11 @@ Geist Sans y Geist Mono **no** se cargan; los nombraba la guía histórica.
 - **Velo (`.vellum`):** `bg-white/20`, `backdrop-blur-[2px]`, borde `black/5` y sombra de trama en hover.
 - **Filtro crayón:** `filter: url(#crayon-filter)` / `#hero-crayon`, la textura de trazo sobre titulares y logo.
 
-**Variables sin definir:** `--shadow-letterpress` y `--color-background-dark` se usan en `index.css` pero no existen en `@theme`. Las clases `.btn-atelier` e `.input-atelier` están definidas y no se usan.
+**Variables sin definir:** `--shadow-letterpress` y `--color-background-dark` se usan en `index.css` pero no existen en `@theme`. La clase `.input-atelier` está definida y no se usa.
 
 ## Componentes base
 - **Botón principal (formulario):** `w-full py-6 rounded-none bg-black text-white font-bold uppercase tracking-widest text-[12px]`; hover `bg-black/80` + sombra de trama + `-translate-y-1`. Mientras se envía: `bg-black/20`. Éxito: `bg-primary`.
+- **Botón de llamado (CTA «Iniciar proyecto»):** `.btn-atelier` + `bg-black text-white px-8 py-5 rounded-none font-mono font-bold text-[11px] tracking-[0.3em]` (`md:tracking-[0.4em]`), borde negro y sombra de trama fija; hover `bg-neutral-800`.
 - **Campo:** solo línea inferior: `bg-transparent border-b-2 border-black/10 px-4 py-4 text-lg`; foco `border-primary bg-black/[0.02]`. Rótulo mono de 10px que pasa a `primary` en foco.
 - **Rótulo de sección:** línea de 48×2px en `primary` + texto mono de 12px en `primary`, negrita, `tracking-[0.4em]`.
 - **Chip:** `rounded-full px-3 py-1 border border-black/10 font-mono text-[10px] uppercase tracking-widest text-black/60`.

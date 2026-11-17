@@ -19,6 +19,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 .row{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
 .btn{border:0;width:320px;padding:24px;border-radius:0;font:700 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;background:#000;color:#fff;transition:all .3s;cursor:pointer}.btn:hover{background:rgba(0,0,0,.8);box-shadow:4px 4px 0 rgba(0,0,0,.8);transform:translateY(-4px)}.btn.ok{background:var(--primary)}
 .field{width:320px}.field label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.55);margin-left:4px}.field input{width:100%;background:transparent;border:0;border-bottom:2px solid rgba(0,0,0,.1);padding:16px;font:18px var(--sans);outline:none}.field input:focus{border-color:var(--primary);background:rgba(0,0,0,.02)}
+.cta{display:inline-block;background:#000;color:#fff;border:1px solid #000;padding:20px 32px;font:700 11px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;box-shadow:4px 4px 0 rgba(0,0,0,.8)}.cta:hover{background:#262626}
 .pill{display:inline-flex;padding:4px 12px;border:1px solid rgba(0,0,0,.1);border-radius:999px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.6)}
 .logos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.logos figure{margin:0}.logos .box{height:240px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,.08)}.logos img{max-height:200px;max-width:80%}figcaption{font-size:13px;margin-top:8px;color:rgba(0,0,0,.65)}figcaption code{font-family:var(--mono);font-size:12px}
 .note{border-left:2px solid var(--primary);padding:4px 0 4px 16px;font-size:14px;color:rgba(0,0,0,.7);max-width:760px}
@@ -48,11 +49,12 @@ ol li{margin-bottom:8px}code{font-family:var(--mono);font-size:.9em}
 <div class="row">
 <div><p class="spec-m" style="margin-top:0">Botón principal</p><button class="btn">Enviar iniciativa</button><p style="height:12px"></p><button class="btn ok">Iniciativa recibida</button></div>
 <div class="field"><p class="spec-m" style="margin-top:0">Campo</p><label>Tu identidad</label><input placeholder="Nombre y apellido"></div>
+<div><p class="spec-m" style="margin-top:0">CTA</p><a class="cta">Iniciar proyecto</a></div>
 <div><p class="spec-m" style="margin-top:0">Chip</p><span class="pill">Commission: Open</span></div>
 </div>
 <table style="margin-top:36px"><tr><th>Token</th><th>Valor</th><th>Uso</th></tr>
-<tr><td><code>--radius-sharp</code></td><td>2px</td><td>Bordes técnicos.</td></tr>
-<tr><td><code>--radius-technical</code></td><td>8px</td><td>Tarjetas y piezas.</td></tr>
+<tr><td>Esquinas rectas</td><td>0 / 2px</td><td>Tarjetas, botones y campos (sin radio o <code>rounded-sm</code>).</td></tr>
+<tr><td><code>--radius-sharp</code> · <code>--radius-technical</code></td><td>2px · 8px</td><td>Definidos en <code>@theme</code>, sin uso.</td></tr>
 <tr><td><code>rounded-full</code></td><td>9999px</td><td>Chips y rótulos.</td></tr>
 <tr><td><code>--shadow-hatch</code></td><td>4px 4px 0 rgba(0,0,0,.8)</td><td>Sombra dura de imprenta en hover.</td></tr>
 <tr><td><code>--shadow-ink</code></td><td>0 4px 20px rgba(217,2,109,.15)</td><td>Halo de tinta.</td></tr></table>
