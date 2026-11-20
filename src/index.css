@@ -31,11 +31,6 @@
   box-shadow: var(--shadow-hatch);
 }
 
-.letterpress {
-  box-shadow: var(--shadow-letterpress);
-  background: linear-gradient(145deg, #0f0f0f, #141414);
-}
-
 *,
 *::before,
 *::after {
@@ -48,11 +43,6 @@
   color: var(--color-deep-charcoal);
   transition-property: background-color, color;
   transition-duration: 500ms;
-}
-
-.dark {
-  background-color: var(--color-background-dark);
-  color: white;
 }
 
 html {
@@ -204,14 +194,5 @@ h4 {
 
 .btn-atelier:active {
   @apply translate-y-0 scale-[0.98];
-  box-shadow: var(--shadow-letterpress);
-}
-
-.input-atelier {
-  @apply w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-6 py-4 text-white font-sans transition-all duration-500 placeholder:text-white/20;
-}
-
-.input-atelier:focus {
-  @apply outline-none border-[var(--color-primary)]/40 bg-white/[0.06];
-  box-shadow: 0 0 20px var(--color-primary)/0.05;
+  box-shadow: none; /* al presionar, la sombra de trama desaparece */
 }

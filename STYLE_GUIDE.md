@@ -73,7 +73,6 @@ Geist Sans y Geist Mono **no** se cargan; los nombraba la guía histórica.
 - **Velo (`.vellum`):** `bg-white/20`, `backdrop-blur-[2px]`, borde `black/5` y sombra de trama en hover.
 - **Filtro crayón:** `filter: url(#crayon-filter)` / `#hero-crayon`, la textura de trazo sobre titulares y logo.
 
-**Variables sin definir:** `--shadow-letterpress` y `--color-background-dark` se usan en `index.css` pero no existen en `@theme`. La clase `.input-atelier` está definida y no se usa.
 
 ## Componentes base
 - **Botón principal (formulario):** `w-full py-6 rounded-none bg-black text-white font-bold uppercase tracking-widest text-[12px]`; hover `bg-black/80` + sombra de trama + `-translate-y-1`. Mientras se envía: `bg-black/20`. Éxito: `bg-primary`.
